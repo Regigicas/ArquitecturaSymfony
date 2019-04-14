@@ -1,0 +1,17 @@
+infractor_homepage:
+    path: /
+    defaults: { _controller: InfractorBundle:Default:index }
+
+# New paths generados
+
+get_login:
+    path: /login
+    defaults: { _controller: InfractorBundle:Login:getLogin }
+
+logout:
+    path: /logout
+    defaults: { _controller: InfractorBundle:Login:doLogout }
+
+get_home:
+    path: /home_infractor
+    defaults: { _controller: InfractorBundle:Home:getHome }
