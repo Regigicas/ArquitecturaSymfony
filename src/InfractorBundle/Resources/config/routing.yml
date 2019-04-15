@@ -15,3 +15,23 @@ logout:
 get_home:
     path: /home_infractor
     defaults: { _controller: InfractorBundle:Home:getHome }
+
+detalles_multa:
+    path: /detalles_multa
+    defaults: { _controller: InfractorBundle:Home:detallesMulta }
+
+eleccion_tarjeta:
+    path: /pago/pagoTarjeta
+    defaults: { _controller: InfractorBundle:Pagos:pagoTarjeta }
+
+eleccion_paypal:
+    path: /pago/paypal
+    defaults: { _controller: InfractorBundle:Pagos:pagoPayPal }
+
+finalizarPagoTarjeta:
+    path: /pagado
+    defaults: { _controller: InfractorBundle:Pagos:comprobarYFinalizar }
+
+finalizarPagoPayPal:
+    path: /pagado
+    defaults: { _controller: InfractorBundle:Pagos:comprobarYFinalizarPP }

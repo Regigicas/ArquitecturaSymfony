@@ -1,0 +1,46 @@
+{% set arrayPago =
+{
+    0: "No Pagado",
+    1: "Pagado",
+    2: "En proceso de pago"
+}%}
+
+{% set arrayReclamado =
+{
+    0: "No ha sido reclamada",
+    1: "Ha sido reclamada"
+}%}
+
+<b>Administrador: {{multa.nombreAdmin}}</b>
+<br><b>Matrícula Multada: </b> {{multa.matricula}}
+<br><b>Infractor: </b> {{multa.credencial}}
+<br> <b>Fecha: </b> {{multa.fecha | date("Y-m-d")}}
+<br> <b>Razón: </b> {{multa.razon}}
+<br> <b>Dirección: </b> {{multa.direccion}}
+<br> <b>Precio: </b> {{multa.precio}}
+<br> <b>Reclamada: </b> {{arrayReclamado[multa.reclamada]}}
+<br> <b>Estado: </b> {{arrayPago[multa.estado]}}
+
+{% if (multa.estado > 0) %}
+    
+        <br><br>
+        <form action="../formas_pago.html" method="POST">
+            <input type="Submit" value="Pagar" disabled>
+        </form>
+    {% else %}
+        <br><br> <form action="../formas_pago.html" method="POST">
+            <input type="Submit" value="Pagar">
+        </form>
+{% endif %}
+
+{% if (multa.reclamada == 0 and multa.estado == 0) %}
+        <form action="procesar_reclamar_multa.php" method="POST">
+            <input type="Submit" value="Reclamar multa">
+        </form>
+    {% else %}
+        <form action="procesar_reclamar_multa.php" method="POST">
+            <input type="Submit" value="Reclamar multa" disabled>
+        </form>
+{% endif %}
+
+<a href='{{ path("get_home") }}'>Volver atrás</a>

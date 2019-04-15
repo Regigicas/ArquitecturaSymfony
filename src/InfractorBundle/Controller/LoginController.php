@@ -14,7 +14,7 @@ class LoginController extends Controller
         $request = $this->getRequest();
         $form = $this->createFormBuilder(null, array())
                 ->add("credencial", "text")
-                ->add("password", "password", [ "constraints" => new Length(["min" => 5, "minMessage" => "La contraseña tiene que tener 5 caracteres minimo"])])
+                ->add("password", "password", [ "constraints" => new Length(["min" => 5, "minMessage" => "La contraseña tiene que tener 5 caracteres mínimo"]) ])
                 ->getForm();
 
         if ($request->getMethod() == "GET")  // SI ES GET
@@ -57,6 +57,7 @@ class LoginController extends Controller
                     ));
                 }
 
+                $this->get("session")->set("credencial", $credencial);
                 return $this->redirect($this->generateUrl("get_home"));
             }
 
