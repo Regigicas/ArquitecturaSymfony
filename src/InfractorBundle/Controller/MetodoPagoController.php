@@ -10,41 +10,9 @@ class MetodoPagoController extends Controller
     {
         $request = $this->getRequest();
 
-        if($request->getMethod() == "POST")
-        {
-            return;
-        }
-
+        if ($request->getMethod() != "POST")
+            return $this->redirect($this->generateUrl("get_home"));
         return $this->render('InfractorBundle:ElegirPago:elegirPago.html.twig');
     }
-
-    /*public function getMetodoPayPalAction()
-    {
-        $request = $this->getRequest();
-
-        if($request->getMethod() == "GET")  // GET
-        {
-            return $this->render('InfractorBundle:ElegirPago:pagarPayPal.html.twig');
-        }
-        else                                // POST
-        {
-
-        }
-    }
-
-    public function getMetodoTarjetaAction()
-    {
-        $request = $this->getRequest();
-
-        if($request->getMethod() == "GET")  // GET
-        {
-            return $this->render('InfractorBundle:ElegirPago:pagarTarjeta.html.twig');
-        }
-        else                                // POST
-        {
-
-        }
-    }*/
-
 
 }

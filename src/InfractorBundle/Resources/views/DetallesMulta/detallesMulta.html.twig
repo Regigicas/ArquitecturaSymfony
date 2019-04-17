@@ -11,9 +11,9 @@
     1: "Ha sido reclamada"
 }%}
 
-<b>Administrador: {{multa.nombreAdmin}}</b>
-<br><b>Matrícula Multada: </b> {{multa.matricula}}
-<br><b>Infractor: </b> {{multa.credencial}}
+     <b>Administrador: {{multa.nombreAdmin}}</b>
+<br> <b>Matrícula Multada: </b> {{multa.matricula}}
+<br> <b>Infractor: </b> {{multa.credencial}}
 <br> <b>Fecha: </b> {{multa.fecha | date("Y-m-d")}}
 <br> <b>Razón: </b> {{multa.razon}}
 <br> <b>Dirección: </b> {{multa.direccion}}
@@ -24,21 +24,21 @@
 {% if (multa.estado > 0) %}
     
         <br><br>
-        <form action="../formas_pago.html" method="POST">
+        <form action="{{path("elegir_pago")}}" method="POST">
             <input type="Submit" value="Pagar" disabled>
         </form>
     {% else %}
-        <br><br> <form action="../formas_pago.html" method="POST">
+        <br><br> <form action="{{path("elegir_pago")}}" method="POST">
             <input type="Submit" value="Pagar">
         </form>
 {% endif %}
 
 {% if (multa.reclamada == 0 and multa.estado == 0) %}
-        <form action="procesar_reclamar_multa.php" method="POST">
+        <form action="{{path("get_home_reclamar")}}" method="POST">
             <input type="Submit" value="Reclamar multa">
         </form>
     {% else %}
-        <form action="procesar_reclamar_multa.php" method="POST">
+        <form action="{{path("get_home_reclamar")}}" method="POST">
             <input type="Submit" value="Reclamar multa" disabled>
         </form>
 {% endif %}

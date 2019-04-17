@@ -20,24 +20,28 @@
         <form class="form-signin" action="{{ path("finalizarPagoTarjeta") }}" ENCTYPE="multipart/form-data">
             
           <br>
-            <img class="mb-4" src="imagenes/credit_card.png" alt="Tarjeta Crédito" width="150" height="72">
+            <img class="mb-4" src="{{ asset('images/credit_card.png') }}" alt="Tarjeta Crédito" width="150" height="72">
             <h1 id="h1tj" class="h3 mb-3 font-weight-normal">Datos de la Tarjeta</h1>
 
             <label for="nombre_titular" class="sr-only">Nombre</label>
-            <input type="email" id="nombre_titular" class="form-control" placeholder="Nombre del Titular" required autofocus>
+            {{ form_widget(form.nombre_titular, { "attr": { "class": "form-control", "placeholder": "Nombre del Titular" } }) }}
+            <!--<input type="email" id="nombre_titular" class="form-control" placeholder="Nombre del Titular" required autofocus>-->
 
             <label for="numero_tarjeta" class="sr-only">Número de la Tarjeta</label>
-            <input type="number" id="numero_tarjeta" class="form-control" placeholder="Número de Tarjeta" required>
+            {{ form_widget(form.numero_tarjeta, { "attr": { "class": "form-control", "placeholder": "Número de Tarjeta" } }) }}
+            <!--<input type="number" id="numero_tarjeta" class="form-control" placeholder="Número de Tarjeta" required>-->
 
             <label for="fecha_caducidad" class="sr-only">Fecha de Caducidad</label>
-            <input type="text" id="fecha_caducidad" class="form-control" placeholder="yyyy-MM-dd" required>
+            {{ form_widget(form.fecha_caducidad, { "attr": { "class": "form-control", "placeholder": "yyyy-MM-dd" } }) }}
+            <!--<input type="text" id="fecha_caducidad" class="form-control" placeholder="yyyy-MM-dd" required>-->
             
             <label for="CVV" class="sr-only">CVV</label>
-            <input type="number" id="CVV" class="form-control" placeholder="CVV" required>
+            {{ form_widget(form.CVV, { "attr": { "class": "form-control", "placeholder": "CVV" } }) }}
+            <!--<input type="number" id="CVV" class="form-control" placeholder="CVV" required>-->
             
             <br>
 
-            <input class="btn btn-lg btn-primary btn-block" type="submit"/>
+            <input class="btn btn-lg btn-primary btn-block" type="submit" value="Dejar de ser moroso"/>
             
           </form>
     </div>

@@ -17,21 +17,29 @@ class Matriculas
      *
      * @ORM\Column(name="matricula", type="string", length=50, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $matricula;
 
     /**
      * @var \Coches
      *
-     * @ORM\ManyToOne(targetEntity="Coches")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="n_bastidor", referencedColumnName="n_bastidor")
-     * })
+     * @ORM\Column(name="n_bastidor", type="string", length=50, nullable=false)
      */
-    private $nBastidor;
+    private $NBastidor;
 
+    /**
+     * Set matricula
+     *
+     * @param string
+     *
+     * @return string
+     */
+    public function setMatricula($matricula)
+    {
+        $this->matricula = $matricula;
 
+        return $this;
+    }
 
     /**
      * Get matricula
@@ -44,26 +52,26 @@ class Matriculas
     }
 
     /**
-     * Set nBastidor
+     * Set NBastidor
      *
-     * @param \DBBundle\Entity\Coches $nBastidor
+     * @param string
      *
-     * @return Matriculas
+     * @return string
      */
-    public function setNBastidor(\DBBundle\Entity\Coches $nBastidor = null)
+    public function setNBastidor($NBastidor)
     {
-        $this->nBastidor = $nBastidor;
+        $this->NBastidor = $NBastidor;
 
         return $this;
     }
 
     /**
-     * Get nBastidor
+     * Get NBastidor
      *
-     * @return \DBBundle\Entity\Coches
+     * @return string
      */
     public function getNBastidor()
     {
-        return $this->nBastidor;
+        return $this->NBastidor;
     }
 }

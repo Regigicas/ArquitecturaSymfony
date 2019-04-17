@@ -3,6 +3,7 @@
 namespace DBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Infractor
@@ -18,6 +19,12 @@ class Infractor
      * @ORM\Column(name="credencial", type="string", length=255, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Assert\Regex(
+     *     pattern="/[0-9]{8}[A-Z]{1}/",
+     *     message="El credencial (DNI) debe tener 8 números seguidos de una letra en mayúscula"
+     * )
+     * 
      */
     private $credencial;
 
@@ -32,6 +39,10 @@ class Infractor
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
+     * @Assert\Regex(
+     *     pattern="/[a-z][A-Z]/",
+     *     message="El nombre no puede contener números"
+     * )
      */
     private $nombre;
 
@@ -39,6 +50,10 @@ class Infractor
      * @var string
      *
      * @ORM\Column(name="apellidos", type="string", length=255, nullable=false)
+     * @Assert\Regex(
+     *     pattern="/[a-z][A-Z]/",
+     *     message="Los apellidos no pueden contener números"
+     * )
      */
     private $apellidos;
 
@@ -46,6 +61,10 @@ class Infractor
      * @var integer
      *
      * @ORM\Column(name="tlf", type="integer", nullable=false)
+     * @Assert\Regex(
+     *     pattern="/[6-7]{1}[0-9]{8}/",
+     *     message="El teléfono sólo pueden ser 9 números, empezando por 6 o 7"
+     * )
      */
     private $tlf;
 
@@ -206,5 +225,10 @@ class Infractor
     public function getMultas()
     {
         return $this->multas;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->credencial;
     }
 }

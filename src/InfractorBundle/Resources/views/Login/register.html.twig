@@ -23,26 +23,34 @@
 
     <div class="container">
 
-        <form class="form-signin" action="{{ path("get_login") }}" method="POST">
+        <form class="form-signin" action="{{ path("register") }}" method="POST">
           
             <img class="mb-4" src="{{ asset('images/police.png') }}" alt="" width="150" height="150">
-            <h1 id="h1"class="h3 mb-3 font-weight-normal">Iniciar sesión</h1>
+            <h1 id="h1"class="h3 mb-3 font-weight-normal">Registrarse</h1>
+
+            <label for="nombre" class="sr-only">Nombre</label>
+            {{ form_widget(form.nombre, { "attr": { "class": "form-control", "placeholder": "Nombre" } }) }}
+
+            <label for="apellidos" class="sr-only">Apellidos</label>
+            {{ form_widget(form.apellidos, { "attr": { "class": "form-control", "placeholder": "Apellidos" } }) }}
+
+            <label for="tlf" class="sr-only">Teléfono</label>
+            {{ form_widget(form.tlf, { "attr": { "class": "form-control", "placeholder": "Teléfono" } }) }}
+
+            <label for="fExpCarnet" class="sr-only">Fecha de Expedición del Carné</label>
+            {{ form_widget(form.fExpCarnet, { "attr": { "class": "form-control", "placeholder": "Fecha de Expedición del Carné de Conducir" } }) }}
 
             <label for="credencial" class="sr-only">Credencial</label>
             {{ form_widget(form.credencial, { "attr": { "class": "form-control", "placeholder": "CIF-NIF" } }) }}
-            <!--<input type="text" class="form-control" placeholder="CIF-NIF" name="credencial" required autofocus>-->
 
-            <label for="inputPassword" class="sr-only mt-3">Contraseña</label>
+            <label for="password" class="sr-only mt-3">Contraseña</label>
             {{ form_widget(form.password, { "attr": { "class": "form-control mt-3", "placeholder": "Contraseña" } }) }}
-            <!--<input type="password" class="form-control mt-3" placeholder="Contraseña" name="password" required>-->
             
             <!--<input type="hidden" name="typeLogin" value="infractor">-->
             {{ form_row(form._token) }}
             
-            <input class="btn btn-lg btn-primary btn-block" type="submit" value="Log-in"/>
+            <input class="btn btn-lg btn-primary btn-block" type="submit" value="Registrarse"/>
         </form>
-
-        <a id="link" href="{{ path("register") }}">¿No estás registrado?</a>
 
         {% if not form.vars.valid %}
             <div class="alert alert-danger">

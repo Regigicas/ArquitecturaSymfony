@@ -14,7 +14,7 @@
 
     <title>Métodos de Pago</title>
 
-    <link href="css/metodos_pago.css" rel="stylesheet">
+    <link href="{{ asset('css/metodos_pago.css') }}" rel="stylesheet">
   </head>
 
   <body>
@@ -39,7 +39,6 @@
             <form action="{{ path("eleccion_paypal") }}" enctype="application/x-www-form-urlencoded">
                 <input type="submit" class="btn btn-lg btn-block btn-primary" value="Pagar con PayPal"/>
             </form>
-            
           </div>
         </div>
 
@@ -59,7 +58,6 @@
           </div>
         </div>
 
-      
     </div>
 
 

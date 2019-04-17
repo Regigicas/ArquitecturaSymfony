@@ -3,6 +3,7 @@
 namespace InfractorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 // Este controlador actuará para ir a la home del infractor y conseguir los datos de la base de datos que se le mostrarán en la pantalla principal
 
@@ -14,14 +15,14 @@ class HomeController extends Controller
         
         $credencial = $this->get("session")->get("credencial");
         if (!$credencial)
-            throw Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+            throw new AccessDeniedHttpException();
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQueryBuilder()
                             ->select("m.id", "m.razon", "m.fecha", "m.reclamada", "m.precio", "m.estado", "t.matricula", "m.direccion")
                             ->from("DBBundle:Multas", "m")
                             ->leftJoin("DBBundle:Matriculas", "t", \Doctrine\ORM\Query\Expr\Join::WITH, "m.matricula = t.matricula")
-                            ->leftJoin("DBBundle:Coches", "c", \Doctrine\ORM\Query\Expr\Join::WITH, "t.nBastidor = c.nBastidor")
+                            ->leftJoin("DBBundle:Coches", "c", \Doctrine\ORM\Query\Expr\Join::WITH, "t.NBastidor = c.NBastidor")
                             ->where("c.credencial = :credencial")
                             ->setParameter(":credencial", $credencial)
                             ->getQuery();
@@ -51,8 +52,17 @@ class HomeController extends Controller
                             ->getQuery();
 
         $multa = $query->getResult();
+
+        $session = $this->get("session")->set("idMulta", $multaId);
+
         // Render de la multa
 
         return $this->render('InfractorBundle:DetallesMulta:detallesMulta.html.twig', array("multa" => $multa[0]));
+    }
+
+    public function getHomeReclamarAction()
+    {
+        //Se muestra un mensaje de "reclamada" y se redirige a home
+
     }
 }

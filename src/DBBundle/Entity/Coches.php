@@ -3,6 +3,7 @@
 namespace DBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Coches
@@ -17,14 +18,21 @@ class Coches
      *
      * @ORM\Column(name="n_bastidor", type="string", length=50, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Assert\Regex(
+     *     pattern="/^[0-9]+$/",
+     *     message="El número de bastidor no puede contener letras"
+     * )
      */
-    private $nBastidor;
+    private $NBastidor;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="year", type="integer", nullable=false)
+     * @Assert\Regex(
+     *     pattern="/^[0-9]{4,4}$/",
+     *     message="El año debe ser un número de 4 cifras"
+     * )
      */
     private $year;
 
@@ -32,6 +40,10 @@ class Coches
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=50, nullable=false)
+     * @Assert\Regex(
+     *     pattern="/^[A-Za-z ñ]+$/",
+     *     message="El color no puede contener números"
+     * )
      */
     private $color;
 
@@ -39,29 +51,46 @@ class Coches
      * @var integer
      *
      * @ORM\Column(name="potencia_cv", type="integer", nullable=false)
+     * @Assert\Length(
+     *     min=2,
+     *     max=4,
+     *     minMessage="La potencia debe de estar entre 10 y 9999 caballos",
+     *     maxMessage="La potencia debe de estar entre 10 y 9999 caballos"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[0-9]+$/",
+     *     message="La potencia no puede contener letras"
+     * )
      */
     private $potenciaCv;
 
     /**
-     * @var \Infractor
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Infractor")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="credencial", referencedColumnName="credencial")
-     * })
+     * @ORM\Column(name="credencial", type="string", nullable=false)
      */
     private $credencial;
 
+    /**
+     * Set NBastidor
+     *
+     * @return string
+     */
+    public function setNBastidor($NBastidor)
+    {
+        $this->NBastidor = $NBastidor;
 
+        return $this;
+    }
 
     /**
-     * Get nBastidor
+     * Get NBastidor
      *
      * @return string
      */
     public function getNBastidor()
     {
-        return $this->nBastidor;
+        return $this->NBastidor;
     }
 
     /**
@@ -139,11 +168,11 @@ class Coches
     /**
      * Set credencial
      *
-     * @param \DBBundle\Entity\Infractor $credencial
+     * @param string $credencial
      *
      * @return Coches
      */
-    public function setCredencial(\DBBundle\Entity\Infractor $credencial = null)
+    public function setCredencial($credencial)
     {
         $this->credencial = $credencial;
 
@@ -153,7 +182,7 @@ class Coches
     /**
      * Get credencial
      *
-     * @return \DBBundle\Entity\Infractor
+     * @return string
      */
     public function getCredencial()
     {
@@ -178,5 +207,15 @@ class Coches
     public function getMatriculas()
     {
         return $this->matriculas;
+    }
+
+    public function validateMatricula($matricula)
+    {
+        if (preg_match("/[[:digit:]]{4} [[:alpha:]]{3}/", $matricula) != 1 &&
+            preg_match("/[[:alpha:]]{1} [[:digit:]]{4} [[:alpha:]]{2}/", $matricula) != 1 &&
+            preg_match("/[[:alpha:]]{2} [[:digit:]]{4} [[:alpha:]]{1}/", $matricula) != 1)
+            return false;
+
+        return true;
     }
 }

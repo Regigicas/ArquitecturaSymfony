@@ -23,10 +23,9 @@ class LoginController extends Controller
                 "form" => $form->createView()
             ));
         }
-        else                                // SI ES POST
+        else // SI ES POST
         {
             // Obtenemos las cosas del formulario "login.html.twig" y las procesamos like a baus
-
             $form->bind($request);
             if ($form->isSubmitted() && $form->isValid())
             {
@@ -57,13 +56,59 @@ class LoginController extends Controller
                     ));
                 }
 
-                $this->get("session")->set("credencial", $credencial);
+                $session = $this->get("session");
+                $session->set("credencial", $credencial);
+                $session->set("usuario", $usuario);
                 return $this->redirect($this->generateUrl("get_home"));
             }
 
             return $this->render('InfractorBundle:Login:login.html.twig', array(
                 "form" => $form->createView()
             ));
+        }
+    }
+
+    public function doLogoutAction() 
+    {
+        $session = $this->get("session");
+        $session->clear();
+
+        return $this->redirect($this->generateUrl("get_login"));
+    }
+
+    public function registerAction()
+    {
+        // Registramos al user mediante formulario
+
+        $request = $this->getRequest();
+
+        $infractor = new Infractor();
+        $form = $this->createForm(new InfractorType(), $infractor);
+
+        if ($request->getMethod() == "GET") //obtener la page
+        {
+            return $this->render('InfractorBundle:Login:register.html.twig');
+        }
+        else                                //registrar al notas
+        {
+            $form->bind($request);
+
+            if ($form->isSubmitted() && $form->isValid()) //validar formulario
+            {
+                //Validar datos...
+
+                $errores = $this->get("validator")->validate($infractor);
+
+                if(sizeof($errores) > 0)
+                {
+                    $session = $this->get("session");
+                    $session->getFlashBag()->add("error", $error);
+                }
+
+                //... y persistir
+                $em = $this->getDoctrine()->getManager();
+                $em->getRepository("DBBundle:Infractor")->persist();
+            }
         }
     }
 }

@@ -1,27 +1,32 @@
 <?php
 
-namespace InfractorBundle\Form;
+namespace DBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class InfractorType extends AbstractType
+class CochesType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('password')->add('nombre')->add('apellidos')->add('tlf')->add('fExpCarnet')->add('credencial');
-    }
-    /**
+        $builder->add('year')
+                ->add('color')
+                ->add('potenciaCv')
+                ->add('credencial')
+                ->add('NBastidor')
+                ->add('matricula', TextType::class, array('mapped' => false));
+    }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'DBBundle\Entity\Infractor'
+            'data_class' => 'DBBundle\Entity\Coches'
         ));
     }
 
@@ -30,6 +35,6 @@ class InfractorType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'dbbundle_infractor';
+        return 'dbbundle_coches';
     }
 }
