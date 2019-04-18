@@ -17,7 +17,6 @@ class Multas
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -64,36 +63,25 @@ class Multas
     private $estado;
 
     /**
-     * @var \Matriculas
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Matriculas")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="matricula", referencedColumnName="matricula")
-     * })
+     * @ORM\Column(name="matricula", type="string", length=255, nullable=false)
      */
     private $matricula;
 
     /**
-     * @var \Infractor
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Infractor")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="credencial", referencedColumnName="credencial")
-     * })
+     * @ORM\Column(name="credencial", type="string", length=255, nullable=false)
      */
     private $credencial;
 
     /**
-     * @var \Admins
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Admins")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="admin", referencedColumnName="credencial_admin")
-     * })
+     * @ORM\Column(name="admin", type="string", length=255, nullable=false)
      */
     private $admin;
-
-
 
     /**
      * Get id
@@ -252,11 +240,11 @@ class Multas
     /**
      * Set matricula
      *
-     * @param \DBBundle\Entity\Matriculas $matricula
+     * @param string $matricula
      *
      * @return Multas
      */
-    public function setMatricula(\DBBundle\Entity\Matriculas $matricula = null)
+    public function setMatricula($matricula)
     {
         $this->matricula = $matricula;
 
@@ -266,7 +254,7 @@ class Multas
     /**
      * Get matricula
      *
-     * @return \DBBundle\Entity\Matriculas
+     * @return string
      */
     public function getMatricula()
     {
@@ -276,11 +264,11 @@ class Multas
     /**
      * Set credencial
      *
-     * @param \DBBundle\Entity\Infractor $credencial
+     * @param string
      *
      * @return Multas
      */
-    public function setCredencial(\DBBundle\Entity\Infractor $credencial = null)
+    public function setCredencial($credencial)
     {
         $this->credencial = $credencial;
 
@@ -290,7 +278,7 @@ class Multas
     /**
      * Get credencial
      *
-     * @return \DBBundle\Entity\Infractor
+     * @return string
      */
     public function getCredencial()
     {
@@ -300,11 +288,11 @@ class Multas
     /**
      * Set admin
      *
-     * @param \DBBundle\Entity\Admins $admin
+     * @param string
      *
      * @return Multas
      */
-    public function setAdmin(\DBBundle\Entity\Admins $admin = null)
+    public function setAdmin($admin)
     {
         $this->admin = $admin;
 
@@ -314,7 +302,7 @@ class Multas
     /**
      * Get admin
      *
-     * @return \DBBundle\Entity\Admins
+     * @return string
      */
     public function getAdmin()
     {

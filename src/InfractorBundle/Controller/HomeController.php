@@ -44,7 +44,7 @@ class HomeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQueryBuilder()
                             ->select("m.fecha", "m.razon", "m.reclamada", "m.direccion", "m.precio", "m.estado",
-                                     "IDENTITY(m.matricula) AS matricula", "a.nombreAdmin", "IDENTITY(m.credencial) AS credencial")
+                                     "m.matricula", "a.nombreAdmin", "m.credencial")
                             ->from("DBBundle:Multas", "m")
                             ->leftJoin("DBBundle:Admins", "a", \Doctrine\ORM\Query\Expr\Join::WITH, "m.admin = a.credencialAdmin")
                             ->where("m.id = :id")
@@ -53,16 +53,25 @@ class HomeController extends Controller
 
         $multa = $query->getResult();
 
-        $session = $this->get("session")->set("idMulta", $multaId);
+        $this->get("session")->set("idMulta", $multaId);
 
         // Render de la multa
-
         return $this->render('InfractorBundle:DetallesMulta:detallesMulta.html.twig', array("multa" => $multa[0]));
     }
 
     public function getHomeReclamarAction()
     {
-        //Se muestra un mensaje de "reclamada" y se redirige a home
+        // Se muestra un mensaje de "reclamada" y se redirige a home
+        $idMulta = $this->get("session")->get("idMulta");
+        $em = $this->getDoctrine()->getManager();
+        $multa = $em->getRepository("DBBundle:Multas")->find($idMulta);
+        if (!$multa)
+            throw new NotFoundHttpException("No se encuentra la multa con el id $idMulta!");
+        
+        $multa->setReclamada(1);
+        $em->flush();
 
+        // Redirigir a home
+        return $this->redirect($this->generateUrl('get_home'));
     }
 }

@@ -1,0 +1,32 @@
+{% set arrayPago =
+{
+    0: "No Pagado",
+    1: "Pagado",
+    2: "En proceso de pago"
+}%}
+
+{% set arrayReclamado =
+{
+    0: "No ha sido reclamada",
+    1: "Ha sido reclamada"
+}%}
+
+<b>Id multa: </b> {{multa.id}}
+
+<br> <b>Matrícula Multada: </b> {{multa.matricula}}
+<br> <b>Infractor: </b> {{multa.credencial}}
+<br> <b>Fecha: </b> {{multa.fecha | date("Y-m-d")}}
+<br> <b>Razón: </b> {{multa.razon}}
+<br> <b>Dirección: </b> {{multa.direccion}}
+<br> <b>Precio: </b> {{multa.precio}}
+<br> <b>Reclamada: </b> {{arrayReclamado[multa.reclamada]}}
+<br> <b>Estado: </b> {{arrayPago[multa.estado]}}
+<br>
+<br> <b>DNI:</b> {{multa.credencial}}
+<br> <b>Nombre:</b> {{multa.nombre}}
+<br> <b>Apellidos:</b> {{multa.apellidos}}
+<br> <b>Teléfono:</b> {{multa.tlf}}
+<br> <b>Fecha de expedición del carnet:</b> {{multa.fExpCarnet | date("Y-m-d")}}
+
+<br><br>
+<a href='{{ path("get_home_admin") }}'>Volver atrás</a>

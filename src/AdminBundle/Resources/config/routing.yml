@@ -4,3 +4,26 @@ admin_homepage:
 
 # Nuevos Paths
 
+get_login_admin:
+    path: /login_admin
+    defaults: { _controller: AdminBundle:Login:doLogin }
+
+logout_admin:
+    path: /logout_admin
+    defaults: { _controller: AdminBundle:Login:logout }
+
+get_home_admin:
+    path: /home_admin
+    defaults: { _controller: AdminBundle:Home:getHome }
+
+introducir_coche_admin:
+    path: /registrar_coche_admin
+    defaults: { _controller: AdminBundle:Coches:newCoche }
+
+detalles_multa_admin:
+    path: /detallesMulta
+    defaults: { _controller: AdminBundle:Multas:getDetallesMulta }
+
+introducir_multa:
+    path: /newMulta
+    defaults: { _controller: AdminBundle:Multas:newMulta }

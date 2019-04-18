@@ -21,7 +21,7 @@ class Matriculas
     private $matricula;
 
     /**
-     * @var \Coches
+     * @var string
      *
      * @ORM\Column(name="n_bastidor", type="string", length=50, nullable=false)
      */
@@ -73,5 +73,21 @@ class Matriculas
     public function getNBastidor()
     {
         return $this->NBastidor;
+    }
+
+    /**
+     * @ORM\ManyToOne (targetEntity="Coches", inversedBy="matriculas")
+     * @ORM\JoinColumn (name="n_bastidor", referencedColumnName="n_bastidor")
+     * @return \Coches
+     */
+    private $coche;
+    public function setCoche(\DBBundle\Entity\Coches $coche)
+    {
+        $this->coche = $coche;
+    }
+
+    public function getCoche()
+    {
+        return $this->coche;
     }
 }

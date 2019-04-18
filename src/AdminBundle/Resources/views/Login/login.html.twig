@@ -23,10 +23,10 @@
 
     <div class="container">
 
-        <form class="form-signin" action="{{ path("get_login") }}" method="POST">
+        <form class="form-signin" action="{{ path("get_login_admin") }}" method="POST">
           
             <img class="mb-4" src="{{ asset('images/police.png') }}" alt="" width="150" height="150">
-            <h1 id="h1"class="h3 mb-3 font-weight-normal">Iniciar sesión</h1>
+            <h1 id="h1"class="h3 mb-3 font-weight-normal">Administración: Iniciar sesión</h1>
 
             <label for="credencial" class="sr-only">Credencial</label>
             {{ form_widget(form.credencial, { "attr": { "class": "form-control", "placeholder": "CIF-NIF" } }) }}
@@ -41,8 +41,6 @@
             
             <input class="btn btn-lg btn-primary btn-block" type="submit" value="Log-in"/>
         </form>
-
-        <!--<a id="link" href="{{ path("register") }}">¿No estás registrado?</a>-->
 
         {% if not form.vars.valid %}
             <div class="alert alert-danger">

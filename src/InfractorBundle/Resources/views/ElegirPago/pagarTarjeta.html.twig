@@ -17,7 +17,7 @@
 
   <body class="text-center">
     <div class="container">
-        <form class="form-signin" action="{{ path("finalizarPagoTarjeta") }}" ENCTYPE="multipart/form-data">
+        <form class="form-signin" action="{{ path("eleccion_tarjeta") }}" method="POST">
             
           <br>
             <img class="mb-4" src="{{ asset('images/credit_card.png') }}" alt="Tarjeta Crédito" width="150" height="72">
@@ -38,9 +38,9 @@
             <label for="CVV" class="sr-only">CVV</label>
             {{ form_widget(form.CVV, { "attr": { "class": "form-control", "placeholder": "CVV" } }) }}
             <!--<input type="number" id="CVV" class="form-control" placeholder="CVV" required>-->
-            
             <br>
 
+            {{ form_row(form._token) }}
             <input class="btn btn-lg btn-primary btn-block" type="submit" value="Dejar de ser moroso"/>
             
           </form>

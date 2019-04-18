@@ -3,38 +3,11 @@
 namespace InfractorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Constraints\Length;
 
 class PagosController extends Controller
 {
-
-    public function pagoTarjetaAction()
-    {
-        $request = $this->getRequest();
-
-        if ($request->getMethod() != "POST")
-        {
-            return $this->render('InfractorBundle:ElegirPago:pagarTarjeta.html.twig');
-        }
-        else
-        {
-            return $this->render('InfractorBundle:ElegirPago:elegirPago.html.twig');
-        }
-    }
-
-    public function pagoPayPalAction()
-    {
-        $request = $this->getRequest();
-
-        if($request->getMethod() != "POST")
-        {
-            return $this->render('InfractorBundle:ElegirPago:pagarPayPal.html.twig');
-        }
-        else
-        {
-            return $this->render('InfractorBundle:ElegirPago:elegirPago.html.twig');
-        }
-    }
-
     //tarjeta
     public function comprobarYFinalizarAction()
     {
@@ -66,19 +39,23 @@ class PagosController extends Controller
                 $fecha_caducidad = $form->get("fecha_caducidad")->getData();
                 $CVV = $form->get("CVV")->getData();
 
-                //Actualizar a estado 1 de la multa pasada por sesiones
+                // Actualizar a estado 2 de la multa pasada por sesiones
                 $idMulta = $this->get("session")->get("idMulta");
-
-                $bd = $em->getRepository("DBBundle:Multas");
+                $em = $this->getDoctrine()->getManager();
+                $multa = $em->getRepository("DBBundle:Multas")->find($idMulta);
+                if (!$multa)
+                    throw new NotFoundHttpException("No se encuentra la multa con el id $idMulta!");
                 
+                $multa->setEstado(2);
+                $em->flush();
 
-                //Redirigir
-
-                $this->redirect($this->generateUrl("home_infractor"));
-
-            
-                
+                // Redirigir
+                return $this->redirect($this->generateUrl("get_home"));   
             }
+
+            return $this->render('InfractorBundle:ElegirPago:pagarTarjeta.html.twig', array(
+                "form" => $form->createView()
+            ));
         }
     }
 
@@ -89,12 +66,40 @@ class PagosController extends Controller
 
         $request = $this->getRequest();
         $form = $this->createFormBuilder(null, array())
-                ->add("usuario", "text")
-                ->add("contraseña", "text")
+                ->add("email_paypal", "text")
+                ->add("contrasena_paypal", "text")
                 ->getForm();
 
         if ($request->getMethod() == "GET")
         {
+            return $this->render('InfractorBundle:ElegirPago:pagarPayPal.html.twig', array(
+                "form" => $form->createView()
+            ));
+        }
+        else
+        {
+            $form->bind($request);
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                //Treh
+                
+                $email_paypal = $form->get("email_paypal")->getData();
+                $contrasena_paypal = $form->get("contrasena_paypal")->getData();
+
+                // Actualizar a estado 2 de la multa pasada por sesiones
+                $idMulta = $this->get("session")->get("idMulta");
+                $em = $this->getDoctrine()->getManager();
+                $multa = $em->getRepository("DBBundle:Multas")->find($idMulta);
+                if (!$multa)
+                    throw new NotFoundHttpException("No se encuentra la multa con el id $idMulta!");
+                
+                $multa->setEstado(2);
+                $em->flush();
+
+                // Redirigir
+                return $this->redirect($this->generateUrl("get_home"));   
+            }
+
             return $this->render('InfractorBundle:ElegirPago:pagarPayPal.html.twig', array(
                 "form" => $form->createView()
             ));

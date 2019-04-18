@@ -3,30 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" href="{{ asset('images/multa.png') }}">
+  <link rel="icon" href="imagenes/multa.png">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"crossorigin="anonymous"></script>
   
-  <title>Administrador: Listado de multas</title>
+  <title>Listado de multas (Administrador) </title>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Multitas</a>
+    <a class="navbar-brand" href="#">Multicas</a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="{{ path("get_home") }}">Inicio</a>
+          <a class="nav-link" href="{{path("get_home_admin")}}">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ path("introducir_coche") }}">Introducir Coche</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ path("logout") }}">Logout</a>
+          <a class="nav-link" href="{{path("logout_admin")}}">Logout</a>
         </li>
       </ul>
     </div>
@@ -36,53 +33,64 @@
     <div class="row">
       <div class="col-md-1"></div>
       <div class="col-md-10">
-        <h2>Mis Multas</h2>
+        <h2>Administración de Multas</h2>
+
+        <h5><a href="{{path("introducir_multa")}}">Introducir Nueva Multa</a></h5>
+        <h5><a href="{{path("introducir_coche_admin")}}">Registrar nuevo coche</a></h5>
 
         <table class="table mt-4">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Matricula</th>
+              <th scope="col">Infractor</th>
               <th scope="col">Fecha</th>
               <th scope="col">Razón</th>
               <th scope="col">Lugar</th>
+              <th scope="col">Precio</th>
               <th scope="col">Estado pago</th>
-              <th scope="col">Acciones</th>
+              <th scope="col">Reclamada</th>
+              
             </tr>
           </thead>
           <tbody>
+                {% set arrayPago =
+                {
+                    0: "No pagada",
+                    1: "Pagada",
+                    2: "En proceso de pago"
+                }%}
 
-            {% set arrayPago =
-            {
-                0: "No pagada",
-                1: "Pagada",
-                2: "En proceso de pago"
-            }%}
+                {% set arrayReclamada =
+                {
+                    0: "No",
+                    1: "Sí"
+                }%}
 
-            {% for multa in multas %}
-                <tr>
-                    <th scope='row'>{{loop.index}}</th>
-                    <td>{{multa.matricula}}</td>
-                    <td>{{multa.fecha | date("Y-m-d")}}</td>
-                    <td>{{multa.razon}}</td>
-                    <td>{{multa.direccion}}</td>
-                    <td>{{arrayPago[multa.estado]}}</td>
-                    <td>
-                        <form action="{{ path("detalles_multa") }}" method='POST'>
-                          <input type='hidden' name='multa' value='{{multa.id}}'>
-                          <input class='btn btn-primary' type='submit' value='Detalles Multa'>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-
+                {% for multa in multas %}
+                    <tr>
+                        <th scope='row'>{{loop.index}}</th>
+                        <td>{{multa.matricula}}</td>
+                        <td>{{multa.credencial}}</td>
+                        <td>{{multa.fecha | date("Y-m-d")}}</td>
+                        <td>{{multa.razon}}</td>
+                        <td>{{multa.direccion}}</td>
+                        <td>{{multa.precio}}</td>
+                        <td>{{arrayPago[multa.estado]}}</td>
+                        <td>{{arrayReclamada[multa.reclamada]}}</td>
+                        <td>
+                            <form action="{{ path("detalles_multa_admin") }}" method='POST'>
+                            <input type='hidden' name='multa' value='{{multa.id}}'>
+                            <input class='btn btn-primary' type='submit' value='Detalles Multa'>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
           </tbody>
         </table>
-
       </div>
     </div>
   </div>
-
 </body>
 
 </html>

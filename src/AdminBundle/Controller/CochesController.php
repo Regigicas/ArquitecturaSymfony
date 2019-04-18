@@ -1,6 +1,6 @@
 <?php
 
-namespace InfractorBundle\Controller;
+namespace AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use DBBundle\Entity\Coches;
@@ -8,24 +8,28 @@ use DBBundle\Entity\Matriculas;
 use DBBundle\Form\CochesType;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class CocheController extends Controller
+class CochesController extends Controller
 {
-    public function getFormularioCocheAction()
+
+    public function newCocheAction()
     {
         $request = $this->getRequest();
+
         $credencial = $this->get("session")->get("credencial");
         if (!$credencial)
             throw new AccessDeniedHttpException();
 
         $coche = new Coches();
-        $coche->setCredencial($credencial);
         $form = $this->createForm(new CochesType(), $coche);
+
+        $em = $this->getDoctrine()->getManager();
+        $dnis = $em->getRepository("DBBundle\Infractor")->findAll();
+
         if ($request->getMethod() == "GET")
-            return $this->render("InfractorBundle:Coches:formulario.html.twig", array("form" => $form->createView()));
+            return $this->render('AdminBundle:Coche:newCoche.html.twig', array("form" => $form->createView(), "dnis" => $dnis));
         else
         {
             $form->bind($request);
-            $coche->setCredencial($credencial);
             if ($form->isSubmitted() && $form->isValid())
             {
                 $session = $this->get("session");
@@ -46,9 +50,8 @@ class CocheController extends Controller
                 }
 
                 if ($hayErrores)
-                    return $this->render("InfractorBundle:Coches:formulario.html.twig", array("form" => $form->createView()));
+                    return $this->render("AdminBundle:Coche:newCoche.html.twig", array( "form" => $form->createView() ));
 
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($coche);
                 $em->flush();
 
@@ -61,7 +64,7 @@ class CocheController extends Controller
                 return $this->redirect($this->generateUrl("get_home"));
             }
 
-            return $this->render("InfractorBundle:Coches:formulario.html.twig", array("form" => $form->createView()));
+            return $this->render("AdminBundle:Coche:newCoche.html.twig", array( "form" => $form->createView() ));
         }
     }
 }

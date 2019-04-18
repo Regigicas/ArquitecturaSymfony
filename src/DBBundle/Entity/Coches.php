@@ -190,7 +190,7 @@ class Coches
     }
 
     /**
-     *  @ORM\OneToMany (targetEntity="Matriculas", mappedBy="matriculas")
+     *  @ORM\OneToMany (targetEntity="Matriculas", mappedBy="coche")
      */
     private $matriculas;
 

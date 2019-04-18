@@ -18,7 +18,6 @@ class Infractor
      *
      * @ORM\Column(name="credencial", type="string", length=255, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
      * @Assert\Regex(
      *     pattern="/[0-9]{8}[A-Z]{1}/",

@@ -19,18 +19,21 @@
 
   <body class="text-center">
     <div class="container">
-        <form class="form-signin" ENCTYPE="multipart/form-data" action="{{ path("finalizarPagoPayPal") }}">
+        <form class="form-signin" action="{{ path("eleccion_paypal") }}" method="POST">
 
             <img class="mb-4" src="{{ asset('images/paypal.png') }}" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Loguear</h1>
 
             <label for="email_paypal" class="sr-only">Email</label>
-            <input type="text" id="email_paypal" class="form-control" placeholder="Email" required autofocus>
+            {{ form_widget(form.email_paypal, { "attr": { "class": "form-control", "placeholder": "Email" } }) }}
+            <!--<input type="text" id="email_paypal" class="form-control" placeholder="Email" required autofocus>-->
             <!-- Vuelvo a poner este campo como text para que bootstrap no intente ver si es email o no-->
 
             <label for="contrasena_paypal" class="sr-only">Contraseña</label>
-            <input type="password" id="contrasena_paypal" class="form-control" placeholder="Contraseña" required>
+            {{ form_widget(form.contrasena_paypal, { "attr": { "class": "form-control", "placeholder": "Contraseña" } }) }}
+            <!--<input type="password" id="contrasena_paypal" class="form-control" placeholder="Contraseña" required>-->
             
+            {{ form_row(form._token) }}
             <input class="btn btn-lg btn-primary btn-block" type="submit" value="Dejar de ser moroso"/>
             
           </form>

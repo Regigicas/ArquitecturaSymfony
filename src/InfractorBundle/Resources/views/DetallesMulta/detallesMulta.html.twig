@@ -34,11 +34,11 @@
 {% endif %}
 
 {% if (multa.reclamada == 0 and multa.estado == 0) %}
-        <form action="{{path("get_home_reclamar")}}" method="POST">
+        <form action="{{path("reclamar_multa")}}" method="POST">
             <input type="Submit" value="Reclamar multa">
         </form>
     {% else %}
-        <form action="{{path("get_home_reclamar")}}" method="POST">
+        <form action="{{path("reclamar_multa")}}" method="POST">
             <input type="Submit" value="Reclamar multa" disabled>
         </form>
 {% endif %}

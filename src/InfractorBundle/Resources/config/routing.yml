@@ -28,24 +28,16 @@ elegir_pago:
     path: /pago/elegir
     defaults: { _controller: InfractorBundle:MetodoPago:getMetodosPago }
 
-get_home_reclamar:
-    path: /home_infractor
+reclamar_multa:
+    path: /reclamar_multa
     defaults: { _controller: InfractorBundle:Home:getHomeReclamar }
 
 eleccion_tarjeta:
     path: /pago/pagoTarjeta
-    defaults: { _controller: InfractorBundle:Pagos:pagoTarjeta }
+    defaults: { _controller: InfractorBundle:Pagos:comprobarYFinalizar }
 
 eleccion_paypal:
     path: /pago/paypal
-    defaults: { _controller: InfractorBundle:Pagos:pagoPayPal }
-
-finalizarPagoTarjeta:
-    path: /pagado
-    defaults: { _controller: InfractorBundle:Pagos:comprobarYFinalizar }
-
-finalizarPagoPayPal:
-    path: /pagado
     defaults: { _controller: InfractorBundle:Pagos:comprobarYFinalizarPP }
 
 introducir_coche:

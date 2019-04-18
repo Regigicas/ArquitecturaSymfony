@@ -36,9 +36,7 @@
               <li>Máxima Seguridad</li>
               <li>Navegación Cifrada</li>
             </ul>
-            <form action="{{ path("eleccion_paypal") }}" enctype="application/x-www-form-urlencoded">
-                <input type="submit" class="btn btn-lg btn-block btn-primary" value="Pagar con PayPal"/>
-            </form>
+            <a href="{{ path("eleccion_paypal") }}" class="btn btn-lg btn-block btn-primary">Pagar Con PayPal</a>
           </div>
         </div>
 
@@ -52,9 +50,7 @@
               <li>Navegación Cifrada</li>
               <li>Válidas Diferentes Tarjetas</li>
             </ul>
-            <form action="{{ path("eleccion_tarjeta") }}" url="application/x-www-form-urlencoded">
-                <input type="submit" class="btn btn-lg btn-block btn-primary" value="Pagar con Tarjeta de Crédito"/>
-            </form>
+            <a href="{{ path("eleccion_tarjeta") }}" class="btn btn-lg btn-block btn-primary">Pagar con Tarjeta de Crédito</a>
           </div>
         </div>
 
