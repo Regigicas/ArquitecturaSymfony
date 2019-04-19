@@ -11,7 +11,6 @@ class LoginController extends Controller
     public function doLoginAction()
     {
         $request = $this->getRequest();
-        $request = $this->getRequest();
         $form = $this->createFormBuilder(null, array())
                 ->add("credencial", "text")
                 ->add("password", "password", [ "constraints" => new Length(["min" => 5, "minMessage" => "La contraseña tiene que tener 5 caracteres mínimo"]) ])

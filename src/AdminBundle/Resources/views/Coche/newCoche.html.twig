@@ -18,27 +18,35 @@
 	<body>
 
         <form action="{{ path('introducir_coche_admin') }}" method="post">
-            Color: <!--<input type="text" name="color" value="$color" required>-->
+            Color: 
+            <!--<input type="text" name="color" value="$color" required>-->
             {{ form_widget(form.color, { "attr": { "title": "El color no puede contener números" } }) }}
             <br>
 
-            Matrícula: <!--<input type="text" name="matricula" value="$matricula" required>-->
+            Matrícula: 
+            <!--<input type="text" name="matricula" value="$matricula" required>-->
             {{ form_widget(form.matricula) }}
             <br>
 
-            Número Bastidor: <!--<input type="number" name="numeroBastidor" value="$numeroBastidor" required>-->
+            Número Bastidor: 
+            <!--<input type="number" name="numeroBastidor" value="$numeroBastidor" required>-->
             {{ form_widget(form.NBastidor, { "attr": { "title": "El número de bastidor no puede contener letras" } }) }}
             <br>
 
-            Año: <!--<input type="number" name="ano" value="$año" required>-->
+            Año: 
+            <!--<input type="number" name="ano" value="$año" required>-->
             {{ form_widget(form.year, { "attr": { "title": "El año debe ser un número de 4 cifras" } }) }}
             <br>
             
-            Potencia (CV): <!--<input type="number" name="potencia" value="$potencia" required>-->
+            Potencia (CV): 
+            <!--<input type="number" name="potencia" value="$potencia" required>-->
             {{ form_widget(form.potenciaCv) }}
             <br>
-            
+
+            DNI/CIF:
+            {{ form_widget(form.credencial, { "attr": { "title": "El DNI no puede estar vacio", } }) }}
             <br>
+
             {{ form_row(form._token) }}
             <input type="submit" value="Registrar coche"/>
         </form>

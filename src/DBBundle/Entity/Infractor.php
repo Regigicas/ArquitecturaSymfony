@@ -74,7 +74,17 @@ class Infractor
      */
     private $fExpCarnet;
 
+    /**
+     * Set credencial
+     *
+     * @return Infractor
+     */
+    public function setCredencial($credencial)
+    {
+        $this->credencial = $credencial;
 
+        return $this;
+    }
 
     /**
      * Get credencial
@@ -204,26 +214,6 @@ class Infractor
     public function getFExpCarnet()
     {
         return $this->fExpCarnet;
-    }
-
-    /**
-     *  @ORM\OneToMany (targetEntity="Multas", mappedBy="multas")
-     */
-    private $multas;
-
-    public function __construct()
-    {
-        $this->multas = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function addMultas(Multas $multas)
-    {
-        $this->multas[] = $multas;
-    }
-
-    public function getMultas()
-    {
-        return $this->multas;
     }
 
     public function __toString()

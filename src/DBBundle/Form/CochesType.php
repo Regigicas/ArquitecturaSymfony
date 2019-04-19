@@ -9,6 +9,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class CochesType extends AbstractType
 {
+    private $dnis;
+
+    public function __construct($dnis)
+    {
+        $this->dnis = $dnis;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -17,9 +24,13 @@ class CochesType extends AbstractType
         $builder->add('year')
                 ->add('color')
                 ->add('potenciaCv')
-                ->add('credencial')
                 ->add('NBastidor')
                 ->add('matricula', TextType::class, array('mapped' => false));
+
+        if ($this->dnis != null)
+            $builder->add("credencial", "choice", ["choices" => $this->dnis, "placeholder" => "Selecciona un DNI" ]);
+        else
+            $builder->add("credencial");
     }/**
      * {@inheritdoc}
      */

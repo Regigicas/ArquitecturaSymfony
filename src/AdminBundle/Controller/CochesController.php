@@ -19,11 +19,15 @@ class CochesController extends Controller
         if (!$credencial)
             throw new AccessDeniedHttpException();
 
-        $coche = new Coches();
-        $form = $this->createForm(new CochesType(), $coche);
-
         $em = $this->getDoctrine()->getManager();
-        $dnis = $em->getRepository("DBBundle\Infractor")->findAll();
+        $dnis = $em->getRepository("DBBundle:Infractor")->findAll();
+
+        $dnisFormatted = array();
+        foreach ($dnis as $dni)
+            $dnisFormatted[$dni->getCredencial()] = $dni->getCredencial();
+
+        $coche = new Coches();
+        $form = $this->createForm(new CochesType($dnisFormatted), $coche);
 
         if ($request->getMethod() == "GET")
             return $this->render('AdminBundle:Coche:newCoche.html.twig', array("form" => $form->createView(), "dnis" => $dnis));
@@ -50,7 +54,7 @@ class CochesController extends Controller
                 }
 
                 if ($hayErrores)
-                    return $this->render("AdminBundle:Coche:newCoche.html.twig", array( "form" => $form->createView() ));
+                    return $this->render("AdminBundle:Coche:newCoche.html.twig", array("form" => $form->createView()));
 
                 $em->persist($coche);
                 $em->flush();
@@ -61,7 +65,7 @@ class CochesController extends Controller
                 $em->persist($objMatricula);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl("get_home"));
+                return $this->redirect($this->generateUrl("get_home_admin"));
             }
 
             return $this->render("AdminBundle:Coche:newCoche.html.twig", array( "form" => $form->createView() ));

@@ -3,6 +3,7 @@
 namespace DBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Multas
@@ -17,6 +18,7 @@ class Multas
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -24,6 +26,11 @@ class Multas
      * @var string
      *
      * @ORM\Column(name="razon", type="string", length=255, nullable=false)
+     * 
+     *  @Assert\Regex(
+     *     pattern="/[A-Za-z]+/",
+     *     message="La razón no puede tener números, sólo letras"
+     * )
      */
     private $razon;
 
@@ -52,6 +59,11 @@ class Multas
      * @var float
      *
      * @ORM\Column(name="precio", type="float", precision=10, scale=0, nullable=false)
+     * 
+     *  @Assert\Regex(
+     *     pattern="/[0-9]*$/",
+     *     message="El precio tiene que ser un entero, y no puede tener letras"
+     * )
      */
     private $precio;
 
@@ -307,5 +319,15 @@ class Multas
     public function getAdmin()
     {
         return $this->admin;
+    }
+
+    public function validateMatricula($matricula)
+    {
+        if (preg_match("/[[:digit:]]{4} [[:alpha:]]{3}/", $matricula) != 1 &&
+            preg_match("/[[:alpha:]]{1} [[:digit:]]{4} [[:alpha:]]{2}/", $matricula) != 1 &&
+            preg_match("/[[:alpha:]]{2} [[:digit:]]{4} [[:alpha:]]{1}/", $matricula) != 1)
+            return false;
+
+        return true;
     }
 }
