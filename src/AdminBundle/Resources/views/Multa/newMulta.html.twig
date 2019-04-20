@@ -20,21 +20,21 @@
 
             Razón de la Multa: 
             <!--<input name="razon" type="text" value="$razon" required>-->
-            {{ form_widget(form.razon, { "attr": { "title": "La razón no puede contener números", "placeholder": "Rasonsita de pesito" } }) }}
+            {{ form_widget(form.razon, { "attr": { "title": "La razón no puede contener números", "placeholder": "Rasonsita de pesito", "class": "form-control" } }) }}
             <br>
 
             Dirección: 
             <!--<input name="direccion" type="text" value="$direccion" required>-->
-            {{ form_widget(form.direccion, { "attr": { "placeholder": "Direccionsita realita pliase" } }) }}
+            {{ form_widget(form.direccion, { "attr": { "placeholder": "Direccionsita realita pliase", "class": "form-control" } }) }}
             <br>
 
             Precio: 
             <!--<input name="precio" type="number" value="$precio" required>-->
-            {{ form_widget(form.precio, { "attr": { "title": "El precio no puede contener letras", "placeholder": "Platica rica $$€€ Money69Lot" } }) }}
+            {{ form_widget(form.precio, { "attr": { "title": "El precio no puede contener letras", "placeholder": "Platica rica $$€€ Money69Lot", "class": "form-control" } }) }}
             <br>
 
             Matrícula:
-            {{ form_widget(form.matricula, { "attr": { "title": "La matrícula no puede estar vacía", } }) }}
+            {{ form_widget(form.matricula, { "attr": { "title": "La matrícula no puede estar vacía",  "class": "form-control"} }) }}
             <br>
 
             Fecha 
