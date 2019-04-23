@@ -17,29 +17,35 @@
 
 	<body>
 
+    <div class="container mt-5" style="width:38%">
+      <div>
+
         <form action="{{ path('introducir_coche') }}" method="post">
             Color: <!--<input type="text" name="color" value="$color" required>-->
-            {{ form_widget(form.color, { "attr": { "title": "El color no puede contener números" } }) }}
+            {{ form_widget(form.color, { "attr": { "title": "El color no puede contener números", "class": "form-control" } }) }}
             <br>
 
             Matrícula: <!--<input type="text" name="matricula" value="$matricula" required>-->
-            {{ form_widget(form.matricula) }}
+            {{ form_widget(form.matricula, { "attr": { "class": "form-control" } }) }}
             <br>
 
             Número Bastidor: <!--<input type="number" name="numeroBastidor" value="$numeroBastidor" required>-->
-            {{ form_widget(form.NBastidor, { "attr": { "title": "El número de bastidor no puede contener letras" } }) }}
+            {{ form_widget(form.NBastidor, { "attr": { "title": "El número de bastidor no puede contener letras", "class": "form-control" } }) }}
             <br>
 
             Año: <!--<input type="number" name="ano" value="$año" required>-->
-            {{ form_widget(form.year, { "attr": { "title": "El año debe ser un número de 4 cifras" } }) }}
+            {{ form_widget(form.year, { "attr": { "title": "El año debe ser un número de 4 cifras", "class": "form-control" } }) }}
             <br>
             
             Potencia (CV): <!--<input type="number" name="potencia" value="$potencia" required>-->
-            {{ form_widget(form.potenciaCv) }}
+            {{ form_widget(form.potenciaCv, { "attr": {"class": "form-control"} }) }}
             <br>
             {{ form_row(form._token) }}
             <input type="submit" value="Registrar coche"/>
         </form>
+
+       </div>
+    </div>
         
         {% if not form.vars.valid %}
             <div class="alert alert-danger">

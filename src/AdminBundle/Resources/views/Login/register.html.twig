@@ -22,46 +22,36 @@
   <body>
     <div class="container mt-5">
       <div class="text-center">
-        <form class="form-signin" action="{{ path("register") }}" method="POST">
+        <form class="form-signin" action="{{ path("register_admin") }}" method="POST">
           
             <img class="mb-4" src="{{ asset('images/police.png') }}" alt="" width="150" height="150">
             <h1 id="h1"class="h3 mb-3 font-weight-normal">Registrarse</h1>
 
             <label for="nombre" class="sr-only">Nombre</label>
-            {{ form_widget(form.nombre, { "attr": { "class": "form-control", "placeholder": "Nombre"} }) }}
+            {{ form_widget(form.nombreAdmin, { "attr": { "class": "form-control", "placeholder": "Nombre"} }) }}
 
             <label for="apellidos" class="sr-only">Apellidos</label>
-            {{ form_widget(form.apellidos, { "attr": { "class": "form-control", "placeholder": "Apellidos" } }) }}
-
-            <label for="tlf" class="sr-only">Teléfono</label>
-            {{ form_widget(form.tlf, { "attr": { "class": "form-control", "placeholder": "Teléfono" } }) }}
-
-            <label for="fExpCarnet" class="sr-only">Fecha de Expedición del Carné</label>
-            <div class="form-control">
-                <p>Fecha de Expedición del Carné</p>
-                {{ form_widget(form.fExpCarnet) }}
-            </div>
+            {{ form_widget(form.apellidosAdmin, { "attr": { "class": "form-control", "placeholder": "Apellidos" } }) }}
 
             <label for="credencial" class="sr-only">Credencial</label>
-            {{ form_widget(form.credencial, { "attr": { "class": "form-control", "placeholder": "CIF-NIF" } }) }}
+            {{ form_widget(form.credencialAdmin, { "attr": { "class": "form-control", "placeholder": "CIF-NIF" } }) }}
 
             <label for="password" class="sr-only">Contraseña</label>
-            {{ form_widget(form.password, { "attr": { "class": "form-control", "placeholder": "Contraseña", "style": "margin-bottom: 0;" } }) }}
+            {{ form_widget(form.passwordAdmin, { "attr": { "class": "form-control", "placeholder": "Contraseña", "style": "margin-bottom: 0;" } }) }}
 
             <label for="password2" class="sr-only">Repetir Contraseña</label>
             {{ form_widget(form.password2, { "attr": { "class": "form-control", "placeholder": "Repetir Contraseña" } }) }}
             
-            <!--<input type="hidden" name="typeLogin" value="infractor">-->
+            <!--<input type="hidden" name="typeLogin" value="admin">-->
             {{ form_row(form._token) }}
             
-            <input class="btn btn-lg btn-primary btn-block mt-2" type="submit" value="Registrarse"/>
+            <input class="btn btn-lg btn-primary btn-block mt-2" type="submit" value="Registrarse como Admin" style="color: #56c13d"/>
 
             {% if not form.vars.valid %}
                 <div class="alert alert-danger">
-                    {{ form_errors(form.credencial) }}
-                    {{ form_errors(form.nombre) }}
-                    {{ form_errors(form.apellidos) }}
-                    {{ form_errors(form.tlf) }}
+                    {{ form_errors(form.credencialAdmin) }}
+                    {{ form_errors(form.nombreAdmin) }}
+                    {{ form_errors(form.apellidosAdmin) }}
                 </div>
             {% endif %}
 

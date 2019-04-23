@@ -4,6 +4,8 @@ namespace AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Validator\Constraints\Length;
+use DBBundle\Entity\Admins;
+use DBBundle\Form\AdminsType;
 
 class LoginController extends Controller
 {
@@ -66,5 +68,57 @@ class LoginController extends Controller
         $session->clear();
 
         return $this->redirect($this->generateUrl("get_login_admin"));
+    }
+    
+    public function registerAdminAction()
+    {
+        // Registramos al user mediante formulario
+
+        $request = $this->getRequest();
+
+        $admin = new Admins();
+        $form = $this->createForm(new AdminsType(), $admin);
+
+        if ($request->getMethod() == "GET") //obtener la page
+        {
+            return $this->render('AdminBundle:Login:register.html.twig', array( "form" => $form->createView()));
+        }
+        else                                //registrar al hitler 
+        {
+            $form->bind($request);
+
+            if ($form->isSubmitted() && $form->isValid()) //validar formulario
+            {
+                // Validar datos...
+                $session = $this->get("session");
+                $errores = $this->get("validator")->validate($admin);
+                $password2 = $form->get("password2")->getData();
+                $hayErrores = false;
+
+                if ($admin->getPasswordAdmin() != $password2)
+                {
+                    $hayErrores = true;
+                    $session->getFlashBag()->add("error", "Las contraseñas no coinciden");
+                }
+
+                if (sizeof($errores) > 0)
+                {
+                    $hayErrores = true;
+                    foreach ($errores as $error)
+                        $session->getFlashBag()->add("error", $error);
+                }
+
+                if ($hayErrores)
+                    return $this->render('AdminBundle:Login:register.html.twig', array( "form" => $form->createView()));
+
+                //... y persistir
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($admin);
+                $em->flush();
+                return $this->redirect($this->generateUrl("get_login_admin"));
+            }
+
+            return $this->render('AdminBundle:Login:register.html.twig', array( "form" => $form->createView()));
+        }
     }
 }

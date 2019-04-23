@@ -39,7 +39,7 @@ class Infractor
      *
      * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      * @Assert\Regex(
-     *     pattern="/[a-z][A-Z]/",
+     *     pattern="/^[A-Za-z ñ]+$/",
      *     message="El nombre no puede contener números"
      * )
      */
@@ -50,7 +50,7 @@ class Infractor
      *
      * @ORM\Column(name="apellidos", type="string", length=255, nullable=false)
      * @Assert\Regex(
-     *     pattern="/[a-z][A-Z]/",
+     *     pattern="/^[A-Za-z ñ]+$/",
      *     message="Los apellidos no pueden contener números"
      * )
      */

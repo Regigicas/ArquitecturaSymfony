@@ -1,32 +1,66 @@
-{% set arrayPago =
-{
-    0: "No Pagado",
-    1: "Pagado",
-    2: "En proceso de pago"
-}%}
+<!doctype html>
+<html lang="es">
+  <head>
 
-{% set arrayReclamado =
-{
-    0: "No ha sido reclamada",
-    1: "Ha sido reclamada"
-}%}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="imagenes/login.jpg">
 
-<b>Id multa: </b> {{multa.id}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+    <title>Admin: Detalles multa</title>
 
-<br> <b>Matrícula Multada: </b> {{multa.matricula}}
-<br> <b>Infractor: </b> {{multa.credencial}}
-<br> <b>Fecha: </b> {{multa.fecha | date("Y-m-d")}}
-<br> <b>Razón: </b> {{multa.razon}}
-<br> <b>Dirección: </b> {{multa.direccion}}
-<br> <b>Precio: </b> {{multa.precio}}
-<br> <b>Reclamada: </b> {{arrayReclamado[multa.reclamada]}}
-<br> <b>Estado: </b> {{arrayPago[multa.estado]}}
-<br>
-<br> <b>DNI:</b> {{multa.credencial}}
-<br> <b>Nombre:</b> {{multa.nombre}}
-<br> <b>Apellidos:</b> {{multa.apellidos}}
-<br> <b>Teléfono:</b> {{multa.tlf}}
-<br> <b>Fecha de expedición del carnet:</b> {{multa.fExpCarnet | date("Y-m-d")}}
+	</head>
 
-<br><br>
-<a href='{{ path("get_home_admin") }}'>Volver atrás</a>
+	<body>
+        <div class="row main mt-5">
+
+            <div class="col-sm-3">
+            </div>
+
+            <div class="col-sm-6">
+                {% set arrayPago =
+                {
+                    0: "No Pagado",
+                    1: "Pagado",
+                    2: "En proceso de pago"
+                }%}
+
+                {% set arrayReclamado =
+                {
+                    0: "No ha sido reclamada",
+                    1: "Ha sido reclamada"
+                }%}
+
+                <b>Id multa: </b> {{multa.id}}
+
+                <br> <b>Matrícula Multada: </b> {{multa.matricula}}
+                <br> <b>Infractor: </b> {{multa.credencial}}
+                <br> <b>Fecha: </b> {{multa.fecha | date("Y-m-d")}}
+                <br> <b>Razón: </b> {{multa.razon}}
+                <br> <b>Dirección: </b> {{multa.direccion}}
+                <br> <b>Precio: </b> {{multa.precio}}
+                <br> <b>Reclamada: </b> {{arrayReclamado[multa.reclamada]}}
+                <br> <b>Estado: </b> {{arrayPago[multa.estado]}}
+                <br>
+                <br> <b>DNI:</b> {{multa.credencial}}
+                <br> <b>Nombre:</b> {{multa.nombre}}
+                <br> <b>Apellidos:</b> {{multa.apellidos}}
+                <br> <b>Teléfono:</b> {{multa.tlf}}
+                <br> <b>Fecha de expedición del carnet:</b> {{multa.fExpCarnet | date("Y-m-d")}}
+
+                <br><br>
+                <a href='{{ path("get_home_admin") }}'>Volver atrás</a>
+            </div>
+
+            <div class="col-sm-3">
+            </div>
+
+        </div>
+    </body>
+
+
+</html>

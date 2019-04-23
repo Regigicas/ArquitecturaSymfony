@@ -41,7 +41,19 @@ class Admins
      */
     private $apellidosAdmin;
 
+    /**
+     * Set credencialAdmin
+     *
+     * @param string $credencialAdmin
+     *
+     * @return Admins
+     */
+    public function setCredencialAdmin($credencialAdmin)
+    {
+        $this->credencialAdmin = $credencialAdmin;
 
+        return $this;
+    }
 
     /**
      * Get credencialAdmin
@@ -123,26 +135,6 @@ class Admins
     public function getApellidosAdmin()
     {
         return $this->apellidosAdmin;
-    }
-
-    /**
-     *  @ORM\OneToMany (targetEntity="Multas", mappedBy="multas")
-     */
-    private $multas;
-
-    public function __construct()
-    {
-        $this->multas = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function addMultas(Multas $multas)
-    {
-        $this->multas[] = $multas;
-    }
-
-    public function getMultas()
-    {
-        return $this->multas;
     }
 
     public function __toString()

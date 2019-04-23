@@ -27,3 +27,7 @@ detalles_multa_admin:
 introducir_multa:
     path: /newMulta
     defaults: { _controller: AdminBundle:Multas:newMulta }
+
+register_admin:
+    path: /register_admin
+    defaults: { _controller: AdminBundle:Login:registerAdmin }

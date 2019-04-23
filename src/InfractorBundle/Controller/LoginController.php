@@ -4,6 +4,8 @@ namespace InfractorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Validator\Constraints\Length;
+use DBBundle\Entity\Infractor;
+use DBBundle\Form\InfractorType;
 
 // En este controlador se controlará el login del conductor infractor
 
@@ -87,7 +89,7 @@ class LoginController extends Controller
 
         if ($request->getMethod() == "GET") //obtener la page
         {
-            return $this->render('InfractorBundle:Login:register.html.twig');
+            return $this->render('InfractorBundle:Login:register.html.twig', array( "form" => $form->createView()));
         }
         else                                //registrar al notas
         {
@@ -95,20 +97,36 @@ class LoginController extends Controller
 
             if ($form->isSubmitted() && $form->isValid()) //validar formulario
             {
-                //Validar datos...
-
+                // Validar datos...
+                $session = $this->get("session");
                 $errores = $this->get("validator")->validate($infractor);
+                $password2 = $form->get("password2")->getData();
+                $hayErrores = false;
 
-                if(sizeof($errores) > 0)
+                if ($infractor->getPassword() != $password2)
                 {
-                    $session = $this->get("session");
-                    $session->getFlashBag()->add("error", $error);
+                    $hayErrores = true;
+                    $session->getFlashBag()->add("error", "Las contraseñas no coinciden");
                 }
+
+                if (sizeof($errores) > 0)
+                {
+                    $hayErrores = true;
+                    foreach ($errores as $error)
+                        $session->getFlashBag()->add("error", $error);
+                }
+
+                if ($hayErrores)
+                    return $this->render('InfractorBundle:Login:register.html.twig', array( "form" => $form->createView()));
 
                 //... y persistir
                 $em = $this->getDoctrine()->getManager();
-                $em->getRepository("DBBundle:Infractor")->persist();
+                $em->persist($infractor);
+                $em->flush();
+                return $this->redirect($this->generateUrl("get_login"));
             }
+
+            return $this->render('InfractorBundle:Login:register.html.twig', array( "form" => $form->createView()));
         }
     }
 }

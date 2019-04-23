@@ -19,7 +19,7 @@ class CocheController extends Controller
 
         $coche = new Coches();
         $coche->setCredencial($credencial);
-        $form = $this->createForm(new CochesType(), $coche);
+        $form = $this->createForm(new CochesType(null), $coche);
         if ($request->getMethod() == "GET")
             return $this->render("InfractorBundle:Coches:formulario.html.twig", array("form" => $form->createView()));
         else
