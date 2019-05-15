@@ -12,20 +12,22 @@ class CocheController extends Controller
 {
     public function getFormularioCocheAction()
     {
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $credencial = $this->get("session")->get("credencial");
-        if (!$credencial)
+        $usuario = $em->getRepository("DBBundle:Infractor")->find($credencial);
+        if (!$usuario)
             throw new AccessDeniedHttpException();
 
         $coche = new Coches();
-        $coche->setCredencial($credencial);
+        //$coche->setCredencial($usuario);
         $form = $this->createForm(new CochesType(null), $coche);
         if ($request->getMethod() == "GET")
             return $this->render("InfractorBundle:Coches:formulario.html.twig", array("form" => $form->createView()));
         else
         {
             $form->bind($request);
-            $coche->setCredencial($credencial);
+            $coche->setCredencial($usuario);
             if ($form->isSubmitted() && $form->isValid())
             {
                 $session = $this->get("session");
@@ -48,12 +50,11 @@ class CocheController extends Controller
                 if ($hayErrores)
                     return $this->render("InfractorBundle:Coches:formulario.html.twig", array("form" => $form->createView()));
 
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($coche);
                 $em->flush();
 
                 $objMatricula = new Matriculas();
-                $objMatricula->setCoche($coche);
+                $objMatricula->setNBastidor($coche);
                 $objMatricula->setMatricula($nuevaMatricula);
                 $em->persist($objMatricula);
                 $em->flush();

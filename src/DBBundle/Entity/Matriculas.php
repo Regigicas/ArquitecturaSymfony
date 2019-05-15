@@ -21,11 +21,14 @@ class Matriculas
     private $matricula;
 
     /**
-     * @var string
+     * @var \Coches
      *
-     * @ORM\Column(name="n_bastidor", type="string", length=50, nullable=false)
+     * @ORM\ManyToOne(targetEntity="Coches")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="n_bastidor", referencedColumnName="n_bastidor")
+     * })
      */
-    private $NBastidor;
+    private $nBastidor;
 
     /**
      * Set matricula
@@ -52,42 +55,31 @@ class Matriculas
     }
 
     /**
-     * Set NBastidor
+     * Set nBastidor
      *
-     * @param string
+     * @param \DBBundle\Entity\Coches $nBastidor
      *
-     * @return string
+     * @return Matriculas
      */
-    public function setNBastidor($NBastidor)
+    public function setNBastidor(\DBBundle\Entity\Coches $nBastidor = null)
     {
-        $this->NBastidor = $NBastidor;
+        $this->nBastidor = $nBastidor;
 
         return $this;
     }
 
     /**
-     * Get NBastidor
+     * Get nBastidor
      *
-     * @return string
+     * @return \DBBundle\Entity\Coches
      */
     public function getNBastidor()
     {
-        return $this->NBastidor;
+        return $this->nBastidor;
     }
 
-    /**
-     * @ORM\ManyToOne (targetEntity="Coches", inversedBy="matriculas")
-     * @ORM\JoinColumn (name="n_bastidor", referencedColumnName="n_bastidor")
-     * @return \Coches
-     */
-    private $coche;
-    public function setCoche(\DBBundle\Entity\Coches $coche)
+    public function __toString()
     {
-        $this->coche = $coche;
-    }
-
-    public function getCoche()
-    {
-        return $this->coche;
+        return (string)$this->matricula;
     }
 }

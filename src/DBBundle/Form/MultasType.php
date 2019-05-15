@@ -28,7 +28,10 @@ class MultasType extends AbstractType
                 ->add('credencial');
 
         if ($this->matriculas != null)
-            $builder->add("matricula", "choice", ["choices" => $this->matriculas, "placeholder" => "Selecciona una matrícula" ]);
+            $builder->add("matricula", "entity",
+                array("class" => "DBBundle:Matriculas", 'choices'=>
+                $this->matriculas, 
+                'expanded' => false, 'multiple' => false));
         else
             $builder->add("matricula");
     }/**

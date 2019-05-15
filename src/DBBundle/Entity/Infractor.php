@@ -18,12 +18,10 @@ class Infractor
      *
      * @ORM\Column(name="credencial", type="string", length=255, nullable=false)
      * @ORM\Id
-     * 
      * @Assert\Regex(
      *     pattern="/[0-9]{8}[A-Z]{1}/",
      *     message="El credencial (DNI) debe tener 8 números seguidos de una letra en mayúscula"
      * )
-     * 
      */
     private $credencial;
 
@@ -40,7 +38,7 @@ class Infractor
      * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      * @Assert\Regex(
      *     pattern="/^[A-Za-z ñ]+$/",
-     *     message="El nombre no puede contener números"
+     *     message="El nombre no pueden contener números"
      * )
      */
     private $nombre;
@@ -85,6 +83,7 @@ class Infractor
 
         return $this;
     }
+
 
     /**
      * Get credencial

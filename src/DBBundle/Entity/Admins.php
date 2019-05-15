@@ -17,6 +17,7 @@ class Admins
      *
      * @ORM\Column(name="credencial_admin", type="string", length=255, nullable=false)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $credencialAdmin;
 
@@ -41,19 +42,7 @@ class Admins
      */
     private $apellidosAdmin;
 
-    /**
-     * Set credencialAdmin
-     *
-     * @param string $credencialAdmin
-     *
-     * @return Admins
-     */
-    public function setCredencialAdmin($credencialAdmin)
-    {
-        $this->credencialAdmin = $credencialAdmin;
 
-        return $this;
-    }
 
     /**
      * Get credencialAdmin

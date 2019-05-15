@@ -18,25 +18,12 @@ class MultasController extends Controller
         
         $multaId = $request->get("multa");
         $em = $this->getDoctrine()->getManager();
-
-        $query = $em->createQueryBuilder()
-                            ->select("m.fecha", "m.razon", "m.reclamada", "m.direccion", "m.precio", "m.estado",
-                                     "m.matricula", "a.nombreAdmin", "m.credencial", "m.id",
-                                     "i.nombre", "i.apellidos", "i.tlf", "i.fExpCarnet")
-                            ->from("DBBundle:Multas", "m")
-                            ->leftJoin("DBBundle:Admins", "a", \Doctrine\ORM\Query\Expr\Join::WITH, "m.admin = a.credencialAdmin")
-                            ->leftJoin("DBBundle:Infractor", "i", \Doctrine\ORM\Query\Expr\Join::WITH, "m.credencial = i.credencial")
-                            ->where("m.id = :id")
-                            ->setParameter(":id", $multaId)
-                            ->getQuery();
-
-        $multa = $query->getResult();
-
+        $multa = $em->getRepository("DBBundle:Multas")->find($multaId);
         $session = $this->get("session")->set("idMulta", $multaId);
 
         // Render de la multa
 
-        return $this->render('AdminBundle:DetallesMulta:detallesMulta.html.twig', array( "multa" => $multa[0]) );
+        return $this->render('AdminBundle:DetallesMulta:detallesMulta.html.twig', array( "multa" => $multa) );
     }
 
     public function newMultaAction()
@@ -46,16 +33,8 @@ class MultasController extends Controller
         $em = $this->getDoctrine()->getManager();
         $matriculas = $em->getRepository("DBBundle:Matriculas")->findAll();
 
-        $matriculasFormatted = array();
-        $coches = array();
-        foreach ($matriculas as $matricula)
-        {
-            $matriculasFormatted[$matricula->getMatricula()] = $matricula->getMatricula();
-            $coches[$matricula->getMatricula()] = $matricula->getCoche();
-        }
-
         $multa = new Multas();
-        $form = $this->createForm(new MultasType($matriculasFormatted), $multa);
+        $form = $this->createForm(new MultasType($matriculas), $multa);
 
         if ($request->getMethod() == "GET")
             return $this->render('AdminBundle:Multa:newMulta.html.twig', array("form" => $form->createView()));
@@ -68,10 +47,11 @@ class MultasController extends Controller
             {
                 $session = $this->get("session");
                 $credencial = $session->get("credencial");
+                $adminCredencial = $em->getRepository("DBBundle:Admins")->find($credencial);
                 $nuevaMatricula = $form->get("matricula")->getData();
-                $usuarioCredencial = $coches[$nuevaMatricula]->getCredencial();
+                $usuarioCredencial = $form->get("matricula")->getData()->getNBastidor()->getCredencial();
 
-                $multa->setAdmin($credencial);
+                $multa->setAdmin($adminCredencial);
                 $multa->setCredencial($usuarioCredencial);
                 $multa->setEstado(0);
 
@@ -94,7 +74,7 @@ class MultasController extends Controller
                     return $this->render("AdminBundle:Multa:newMulta.html.twig", array( "form" => $form->createView() ));
 
                 // Insert en la bd
-                $em->merge($multa);
+                $em->persist($multa);
                 $em->flush();
                 
                 return $this->redirect($this->generateUrl("get_home_admin"));

@@ -18,16 +18,7 @@ class HomeController extends Controller
             throw new AccessDeniedHttpException();
 
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQueryBuilder()
-                            ->select("m.id", "m.razon", "m.fecha", "m.reclamada", "m.precio", "m.estado", "t.matricula", "m.direccion")
-                            ->from("DBBundle:Multas", "m")
-                            ->leftJoin("DBBundle:Matriculas", "t", \Doctrine\ORM\Query\Expr\Join::WITH, "m.matricula = t.matricula")
-                            ->leftJoin("DBBundle:Coches", "c", \Doctrine\ORM\Query\Expr\Join::WITH, "t.NBastidor = c.NBastidor")
-                            ->where("c.credencial = :credencial")
-                            ->setParameter(":credencial", $credencial)
-                            ->getQuery();
-
-        $multas = $query->getResult();
+        $multas = $em->getRepository("DBBundle:Multas")->findBy( array("credencial" => $credencial) );
         
         return $this->render('InfractorBundle:Home:home.html.twig', array("multas" => $multas));
     }
@@ -42,21 +33,11 @@ class HomeController extends Controller
         
         $multaId = $request->get("multa");
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQueryBuilder()
-                            ->select("m.fecha", "m.razon", "m.reclamada", "m.direccion", "m.precio", "m.estado",
-                                     "m.matricula", "a.nombreAdmin", "m.credencial")
-                            ->from("DBBundle:Multas", "m")
-                            ->leftJoin("DBBundle:Admins", "a", \Doctrine\ORM\Query\Expr\Join::WITH, "m.admin = a.credencialAdmin")
-                            ->where("m.id = :id")
-                            ->setParameter(":id", $multaId)
-                            ->getQuery();
-
-        $multa = $query->getResult();
-
+        $multa = $em->getRepository("DBBundle:Multas")->find($multaId);
         $this->get("session")->set("idMulta", $multaId);
 
         // Render de la multa
-        return $this->render('InfractorBundle:DetallesMulta:detallesMulta.html.twig', array("multa" => $multa[0]));
+        return $this->render('InfractorBundle:DetallesMulta:detallesMulta.html.twig', array("multa" => $multa));
     }
 
     public function getHomeReclamarAction()

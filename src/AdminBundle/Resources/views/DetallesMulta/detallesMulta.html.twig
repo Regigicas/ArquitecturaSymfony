@@ -37,7 +37,7 @@
 
                 <b>Id multa: </b> {{multa.id}}
 
-                <br> <b>Matrícula Multada: </b> {{multa.matricula}}
+                <br> <b>Matrícula Multada: </b> {{multa.matricula.matricula}}
                 <br> <b>Infractor: </b> {{multa.credencial}}
                 <br> <b>Fecha: </b> {{multa.fecha | date("Y-m-d")}}
                 <br> <b>Razón: </b> {{multa.razon}}
@@ -47,10 +47,10 @@
                 <br> <b>Estado: </b> {{arrayPago[multa.estado]}}
                 <br>
                 <br> <b>DNI:</b> {{multa.credencial}}
-                <br> <b>Nombre:</b> {{multa.nombre}}
-                <br> <b>Apellidos:</b> {{multa.apellidos}}
-                <br> <b>Teléfono:</b> {{multa.tlf}}
-                <br> <b>Fecha de expedición del carnet:</b> {{multa.fExpCarnet | date("Y-m-d")}}
+                <br> <b>Nombre:</b> {{multa.credencial.nombre}}
+                <br> <b>Apellidos:</b> {{multa.credencial.apellidos}}
+                <br> <b>Teléfono:</b> {{multa.credencial.tlf}}
+                <br> <b>Fecha de expedición del carnet:</b> {{multa.credencial.fExpCarnet | date("Y-m-d")}}
 
                 <br><br>
                 <a href='{{ path("get_home_admin") }}'>Volver atrás</a>

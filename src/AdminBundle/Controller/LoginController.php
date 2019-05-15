@@ -49,7 +49,7 @@ class LoginController extends Controller
                         "No se ha podido iniciar sesión con los datos provistos"
                     );
 
-                    return $this->render('Adminbundle:Login:login.html.twig', array( "form" => $form->createView() ));
+                    return $this->render('AdminBundle:Login:login.html.twig', array( "form" => $form->createView() ));
                 }
 
                 $session = $this->get("session");

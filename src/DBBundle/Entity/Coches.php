@@ -23,7 +23,7 @@ class Coches
      *     message="El número de bastidor no puede contener letras"
      * )
      */
-    private $NBastidor;
+    private $nBastidor;
 
     /**
      * @var integer
@@ -65,32 +65,36 @@ class Coches
     private $potenciaCv;
 
     /**
-     * @var string
+     * @var \Infractor
      *
-     * @ORM\Column(name="credencial", type="string", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Infractor")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="credencial", referencedColumnName="credencial")
+     * })
      */
     private $credencial;
 
-    /**
-     * Set NBastidor
-     *
-     * @return string
-     */
-    public function setNBastidor($NBastidor)
-    {
-        $this->NBastidor = $NBastidor;
-
-        return $this;
-    }
 
     /**
-     * Get NBastidor
+     * Get nBastidor
      *
      * @return string
      */
     public function getNBastidor()
     {
-        return $this->NBastidor;
+        return $this->nBastidor;
+    }
+
+    /**
+     * Set nBastidor
+     *
+     * @return Coches
+     */
+    public function setNBastidor($nBastidor)
+    {
+        $this->nBastidor = $nBastidor;
+
+        return $this;
     }
 
     /**
@@ -168,11 +172,11 @@ class Coches
     /**
      * Set credencial
      *
-     * @param string $credencial
+     * @param \DBBundle\Entity\Infractor $credencial
      *
      * @return Coches
      */
-    public function setCredencial($credencial)
+    public function setCredencial(\DBBundle\Entity\Infractor $credencial = null)
     {
         $this->credencial = $credencial;
 
@@ -182,31 +186,11 @@ class Coches
     /**
      * Get credencial
      *
-     * @return string
+     * @return \DBBundle\Entity\Infractor
      */
     public function getCredencial()
     {
         return $this->credencial;
-    }
-
-    /**
-     *  @ORM\OneToMany (targetEntity="Matriculas", mappedBy="coche")
-     */
-    private $matriculas;
-
-    public function __construct()
-    {
-        $this->matriculas = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function addMatriculas(Matriculas $multas)
-    {
-        $this->matriculas[] = $matriculas;
-    }
-
-    public function getMatriculas()
-    {
-        return $this->matriculas;
     }
 
     public function validateMatricula($matricula)

@@ -28,7 +28,10 @@ class CochesType extends AbstractType
                 ->add('matricula', TextType::class, array('mapped' => false));
 
         if ($this->dnis != null)
-            $builder->add("credencial", "choice", ["choices" => $this->dnis, "placeholder" => "Selecciona un DNI" ]);
+            $builder->add("credencial", "entity",
+                array("class" => "DBBundle:Infractor", 'choices'=>
+                $this->dnis, 
+                'expanded' => false, 'multiple' => false));
         else
             $builder->add("credencial");
     }/**

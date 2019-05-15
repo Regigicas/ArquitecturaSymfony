@@ -18,7 +18,7 @@ class Multas
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -26,7 +26,6 @@ class Multas
      * @var string
      *
      * @ORM\Column(name="razon", type="string", length=255, nullable=false)
-     * 
      *  @Assert\Regex(
      *     pattern="/[A-Za-z]+/",
      *     message="La razón no puede tener números, sólo letras"
@@ -59,7 +58,6 @@ class Multas
      * @var float
      *
      * @ORM\Column(name="precio", type="float", precision=10, scale=0, nullable=false)
-     * 
      *  @Assert\Regex(
      *     pattern="/[0-9]*$/",
      *     message="El precio tiene que ser un entero, y no puede tener letras"
@@ -75,25 +73,36 @@ class Multas
     private $estado;
 
     /**
-     * @var string
+     * @var \Matriculas
      *
-     * @ORM\Column(name="matricula", type="string", length=255, nullable=false)
+     * @ORM\ManyToOne(targetEntity="Matriculas")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="matricula", referencedColumnName="matricula")
+     * })
      */
     private $matricula;
 
     /**
-     * @var string
+     * @var \Infractor
      *
-     * @ORM\Column(name="credencial", type="string", length=255, nullable=false)
+     * @ORM\ManyToOne(targetEntity="Infractor")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="credencial", referencedColumnName="credencial")
+     * })
      */
     private $credencial;
 
     /**
-     * @var string
+     * @var \Admins
      *
-     * @ORM\Column(name="admin", type="string", length=255, nullable=false)
+     * @ORM\ManyToOne(targetEntity="Admins")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="admin", referencedColumnName="credencial_admin")
+     * })
      */
     private $admin;
+
+
 
     /**
      * Get id
@@ -252,11 +261,11 @@ class Multas
     /**
      * Set matricula
      *
-     * @param string $matricula
+     * @param \DBBundle\Entity\Matriculas $matricula
      *
      * @return Multas
      */
-    public function setMatricula($matricula)
+    public function setMatricula(\DBBundle\Entity\Matriculas $matricula = null)
     {
         $this->matricula = $matricula;
 
@@ -266,7 +275,7 @@ class Multas
     /**
      * Get matricula
      *
-     * @return string
+     * @return \DBBundle\Entity\Matriculas
      */
     public function getMatricula()
     {
@@ -276,11 +285,11 @@ class Multas
     /**
      * Set credencial
      *
-     * @param string
+     * @param \DBBundle\Entity\Infractor $credencial
      *
      * @return Multas
      */
-    public function setCredencial($credencial)
+    public function setCredencial(\DBBundle\Entity\Infractor $credencial = null)
     {
         $this->credencial = $credencial;
 
@@ -290,7 +299,7 @@ class Multas
     /**
      * Get credencial
      *
-     * @return string
+     * @return \DBBundle\Entity\Infractor
      */
     public function getCredencial()
     {
@@ -300,11 +309,11 @@ class Multas
     /**
      * Set admin
      *
-     * @param string
+     * @param \DBBundle\Entity\Admins $admin
      *
      * @return Multas
      */
-    public function setAdmin($admin)
+    public function setAdmin(\DBBundle\Entity\Admins $admin = null)
     {
         $this->admin = $admin;
 
@@ -314,7 +323,7 @@ class Multas
     /**
      * Get admin
      *
-     * @return string
+     * @return \DBBundle\Entity\Admins
      */
     public function getAdmin()
     {

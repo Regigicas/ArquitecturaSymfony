@@ -70,7 +70,7 @@
                 {% for multa in multas %}
                     <tr>
                         <th scope='row'>{{loop.index}}</th>
-                        <td>{{multa.matricula}}</td>
+                        <td>{{multa.matricula.matricula}}</td>
                         <td>{{multa.credencial}}</td>
                         <td>{{multa.fecha | date("Y-m-d")}}</td>
                         <td>{{multa.razon}}</td>

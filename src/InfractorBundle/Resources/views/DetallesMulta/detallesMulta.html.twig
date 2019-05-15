@@ -35,8 +35,8 @@
                     1: "Ha sido reclamada"
                 }%}
 
-                     <b>Administrador: {{multa.nombreAdmin}}</b>
-                <br> <b>Matrícula Multada: </b> {{multa.matricula}}
+                     <b>Administrador: {{multa.admin.nombreAdmin}}</b>
+                <br> <b>Matrícula Multada: </b> {{multa.matricula.matricula}}
                 <br> <b>Infractor: </b> {{multa.credencial}}
                 <br> <b>Fecha: </b> {{multa.fecha | date("Y-m-d")}}
                 <br> <b>Razón: </b> {{multa.razon}}
