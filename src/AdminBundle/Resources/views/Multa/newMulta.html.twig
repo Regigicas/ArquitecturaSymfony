@@ -58,6 +58,17 @@
                 {{ flashMessage }}
             </div>
         {% endfor %}
+
+        {% if not form.vars.valid %}
+            <div class="alert alert-danger">
+                {{ form_errors(form.razon) }}
+                {{ form_errors(form.fecha) }}
+                {{ form_errors(form.direccion) }}
+                {{ form_errors(form.precio) }}
+                {{ form_errors(form.estado) }}
+                {{ form_errors(form.credencial )}}
+            </div>
+        {% endif %}
       </div>
     </div>
    

@@ -23,7 +23,7 @@ class Coches
      *     message="El número de bastidor no puede contener letras"
      * )
      */
-    private $nBastidor;
+    private $NBastidor;
 
     /**
      * @var integer
@@ -76,23 +76,23 @@ class Coches
 
 
     /**
-     * Get nBastidor
+     * Get NBastidor
      *
      * @return string
      */
     public function getNBastidor()
     {
-        return $this->nBastidor;
+        return $this->NBastidor;
     }
 
     /**
-     * Set nBastidor
+     * Set NBastidor
      *
      * @return Coches
      */
-    public function setNBastidor($nBastidor)
+    public function setNBastidor($NBastidor)
     {
-        $this->nBastidor = $nBastidor;
+        $this->NBastidor = $NBastidor;
 
         return $this;
     }
@@ -195,9 +195,9 @@ class Coches
 
     public function validateMatricula($matricula)
     {
-        if (preg_match("/[[:digit:]]{4} [[:alpha:]]{3}/", $matricula) != 1 &&
-            preg_match("/[[:alpha:]]{1} [[:digit:]]{4} [[:alpha:]]{2}/", $matricula) != 1 &&
-            preg_match("/[[:alpha:]]{2} [[:digit:]]{4} [[:alpha:]]{1}/", $matricula) != 1)
+        if (preg_match("/[[:digit:]]{4} [[:alpha:]]{3}$/", $matricula) != 1 &&
+            preg_match("/[[:alpha:]]{1} [[:digit:]]{4} [[:alpha:]]{2}$/", $matricula) != 1 &&
+            preg_match("/[[:alpha:]]{2} [[:digit:]]{4} [[:alpha:]]{1}$/", $matricula) != 1)
             return false;
 
         return true;

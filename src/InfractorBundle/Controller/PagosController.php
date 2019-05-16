@@ -5,6 +5,7 @@ namespace InfractorBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class PagosController extends Controller
 {
@@ -15,10 +16,12 @@ class PagosController extends Controller
 
         $request = $this->getRequest();
         $form = $this->createFormBuilder(null, array())
-                ->add("nombre_titular", "text")
-                ->add("numero_tarjeta", "number")
-                ->add("fecha_caducidad", "text")
-                ->add("CVV", "number", ["constraints" => new Length(["min" => 3, "minMessage" => "El CVV debe contener 3 dígitos", "max"=> 3 , "maxMessage"=> "El CVV tiene como máximo 3 dígitos" ])])
+                ->add("nombre_titular", "text", ["constraints" => new Regex([ "pattern" => "/^[A-Za-z ñ]+$/", "message" => "El nombre no puede contener números"])])
+                ->add("numero_tarjeta", "text", ["constraints" => new Regex([ "pattern" => "/[[:digit:]]{4} [[:digit:]]{4} [[:digit:]]{4} [[:digit:]]{4}$/", "message" => "El número de la tarjeta no es valido"])])
+                ->add("fecha_caducidad", "date", [ "years" => range(date('Y') , date('Y') + 5),
+                    "months" => range(date("m"), 12),
+                    "days" => range(date("d"), 31) ])
+                ->add("CVV", "number", ["constraints" => new Length(["min" => 3, "max"=> 3 , "exactMessage"=> "El CVV tiene que estar formado por 3 dígitos" ])])
                 ->getForm();
 
         if ($request->getMethod() == "GET")
@@ -66,8 +69,8 @@ class PagosController extends Controller
 
         $request = $this->getRequest();
         $form = $this->createFormBuilder(null, array())
-                ->add("email_paypal", "text")
-                ->add("contrasena_paypal", "text")
+                ->add("email_paypal", "email")
+                ->add("contrasena_paypal", "password")
                 ->getForm();
 
         if ($request->getMethod() == "GET")

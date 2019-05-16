@@ -70,6 +70,13 @@ class MultasController extends Controller
                     $session->getFlashBag()->add("error", "La matrícula no tiene un formato valido");
                 }
 
+                $now = new \DateTime(date("Y-m-d"));
+                if ($multa->getFecha() > $now)
+                {
+                    $hayErrores = true;
+                    $session->getFlashBag()->add("error", "La fecha no puede ser superior al día actual"); 
+                }
+
                 if ($hayErrores)
                     return $this->render("AdminBundle:Multa:newMulta.html.twig", array( "form" => $form->createView() ));
 

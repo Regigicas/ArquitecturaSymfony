@@ -21,7 +21,7 @@ class MultasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('razon')
-                ->add('fecha')
+                ->add('fecha', "date", [ "years" => range(date('Y') - 5 , date('Y')) ])
                 ->add('direccion')
                 ->add('precio')
                 ->add('estado')

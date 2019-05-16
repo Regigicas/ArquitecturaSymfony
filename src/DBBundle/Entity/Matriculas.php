@@ -28,7 +28,7 @@ class Matriculas
      *   @ORM\JoinColumn(name="n_bastidor", referencedColumnName="n_bastidor")
      * })
      */
-    private $nBastidor;
+    private $NBastidor;
 
     /**
      * Set matricula
@@ -55,27 +55,27 @@ class Matriculas
     }
 
     /**
-     * Set nBastidor
+     * Set NBastidor
      *
-     * @param \DBBundle\Entity\Coches $nBastidor
+     * @param \DBBundle\Entity\Coches $NBastidor
      *
      * @return Matriculas
      */
-    public function setNBastidor(\DBBundle\Entity\Coches $nBastidor = null)
+    public function setNBastidor(\DBBundle\Entity\Coches $NBastidor = null)
     {
-        $this->nBastidor = $nBastidor;
+        $this->NBastidor = $NBastidor;
 
         return $this;
     }
 
     /**
-     * Get nBastidor
+     * Get NBastidor
      *
      * @return \DBBundle\Entity\Coches
      */
     public function getNBastidor()
     {
-        return $this->nBastidor;
+        return $this->NBastidor;
     }
 
     public function __toString()

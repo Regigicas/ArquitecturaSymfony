@@ -32,7 +32,7 @@
             <!--<input type="number" id="numero_tarjeta" class="form-control" placeholder="Número de Tarjeta" required>-->
 
             <label for="fecha_caducidad" class="sr-only">Fecha de Caducidad</label>
-            {{ form_widget(form.fecha_caducidad, { "attr": { "class": "form-control", "placeholder": "yyyy-MM-dd" } }) }}
+            {{ form_widget(form.fecha_caducidad, { "attr": { "class": "form-control", "placeholder": "yyyy-MM-dd", "style": "text-align: left;" } }) }}
             <!--<input type="text" id="fecha_caducidad" class="form-control" placeholder="yyyy-MM-dd" required>-->
             
             <label for="CVV" class="sr-only">CVV</label>
@@ -44,6 +44,15 @@
             <input class="btn btn-lg btn-primary btn-block" type="submit" value="Realizar pago"/>
             
           </form>
+
+        {% if not form.vars.valid %}
+            <div class="alert alert-danger">
+                {{ form_errors(form.nombre_titular) }}
+                {{ form_errors(form.numero_tarjeta) }}
+                {{ form_errors(form.fecha_caducidad) }}
+                {{ form_errors(form.CVV) }}
+            </div>
+        {% endif %}
     </div>
    
   </body>

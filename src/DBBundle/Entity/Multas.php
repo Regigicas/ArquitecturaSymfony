@@ -26,10 +26,6 @@ class Multas
      * @var string
      *
      * @ORM\Column(name="razon", type="string", length=255, nullable=false)
-     *  @Assert\Regex(
-     *     pattern="/[A-Za-z]+/",
-     *     message="La razón no puede tener números, sólo letras"
-     * )
      */
     private $razon;
 
@@ -61,6 +57,10 @@ class Multas
      *  @Assert\Regex(
      *     pattern="/[0-9]*$/",
      *     message="El precio tiene que ser un entero, y no puede tener letras"
+     * )
+     * @Assert\GreaterThan(
+     *      value="0",
+     *      message="El precio tiene que ser mayor que 0"
      * )
      */
     private $precio;
@@ -332,9 +332,9 @@ class Multas
 
     public function validateMatricula($matricula)
     {
-        if (preg_match("/[[:digit:]]{4} [[:alpha:]]{3}/", $matricula) != 1 &&
-            preg_match("/[[:alpha:]]{1} [[:digit:]]{4} [[:alpha:]]{2}/", $matricula) != 1 &&
-            preg_match("/[[:alpha:]]{2} [[:digit:]]{4} [[:alpha:]]{1}/", $matricula) != 1)
+        if (preg_match("/[[:digit:]]{4} [[:alpha:]]{3}$/", $matricula) != 1 &&
+            preg_match("/[[:alpha:]]{1} [[:digit:]]{4} [[:alpha:]]{2}$/", $matricula) != 1 &&
+            preg_match("/[[:alpha:]]{2} [[:digit:]]{4} [[:alpha:]]{1}$/", $matricula) != 1)
             return false;
 
         return true;

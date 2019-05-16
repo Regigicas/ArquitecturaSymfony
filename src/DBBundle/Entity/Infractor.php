@@ -29,6 +29,10 @@ class Infractor
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     * @Assert\Length(
+     *     min=5,
+     *     minMessage="La contraseña tiene un mínimo de 5 caracteres"
+     * )
      */
     private $password;
 

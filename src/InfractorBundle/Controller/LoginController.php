@@ -115,6 +115,13 @@ class LoginController extends Controller
                     foreach ($errores as $error)
                         $session->getFlashBag()->add("error", $error);
                 }
+                
+                $now = new \DateTime(date("Y-m-d"));
+                if ($infractor->getFExpCarnet() > $now)
+                {
+                    $hayErrores = true;
+                    $session->getFlashBag()->add("error", "La fecha no puede ser superior al día actual"); 
+                }
 
                 if ($hayErrores)
                     return $this->render('InfractorBundle:Login:register.html.twig', array( "form" => $form->createView()));

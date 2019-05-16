@@ -48,6 +48,12 @@ class CochesController extends Controller
                     $session->getFlashBag()->add("error", "La matrícula no tiene un formato valido");
                 }
 
+                if ($coche->getYear() > date("Y"))
+                {
+                    $hayErrores = true;
+                    $session->getFlashBag()->add("error", "El año no puede ser superior al actual"); 
+                }
+
                 if ($hayErrores)
                     return $this->render("AdminBundle:Coche:newCoche.html.twig", array("form" => $form->createView()));
 
