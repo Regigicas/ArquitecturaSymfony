@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Date;
 
 class PagosController extends Controller
 {
@@ -19,8 +20,10 @@ class PagosController extends Controller
                 ->add("nombre_titular", "text", ["constraints" => new Regex([ "pattern" => "/^[A-Za-z ñ]+$/", "message" => "El nombre no puede contener números"])])
                 ->add("numero_tarjeta", "text", ["constraints" => new Regex([ "pattern" => "/[[:digit:]]{4} [[:digit:]]{4} [[:digit:]]{4} [[:digit:]]{4}$/", "message" => "El número de la tarjeta no es valido"])])
                 ->add("fecha_caducidad", "date", [ "years" => range(date('Y') , date('Y') + 5),
-                    "months" => range(date("m"), 12),
-                    "days" => range(date("d"), 31) ])
+                    "months" => range(1, 12),
+                    "days" => range(1, 31),
+                    "invalid_message" => "La fecha no es válida",
+                    "constraints" => new Date([ "message" => "La fecha no es válida" ]) ])
                 ->add("CVV", "number", ["constraints" => new Length(["min" => 3, "max"=> 3 , "exactMessage"=> "El CVV tiene que estar formado por 3 dígitos" ])])
                 ->getForm();
 
@@ -37,9 +40,18 @@ class PagosController extends Controller
             {
                 //Treh
                 
+                $session = $this->get("session");
                 $nombre_titular = $form->get("nombre_titular")->getData();
                 $numero_tarjeta = $form->get("numero_tarjeta")->getData();
                 $fecha_caducidad = $form->get("fecha_caducidad")->getData();
+                $now = new \DateTime(date("Y-m-d"));
+                if ($fecha_caducidad < $now)
+                {
+                    $session->getFlashBag()->add("error", "La fecha no puede ser inferior al día actual");
+                    return $this->render('InfractorBundle:ElegirPago:pagarTarjeta.html.twig', array(
+                        "form" => $form->createView()));
+                }
+
                 $CVV = $form->get("CVV")->getData();
 
                 // Actualizar a estado 2 de la multa pasada por sesiones

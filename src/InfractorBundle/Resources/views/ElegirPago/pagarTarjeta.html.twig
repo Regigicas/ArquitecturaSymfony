@@ -53,6 +53,12 @@
                 {{ form_errors(form.CVV) }}
             </div>
         {% endif %}
+
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
     </div>
    
   </body>
