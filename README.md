@@ -6,8 +6,6 @@ Autores:
 - Jorge de Andrés (JParzival)
 - Pablo Santos (ph1d0w)
 
-Y recuerden. Santi Abascal, héroe nacional!
-
 
 ------------------------------------------------------------------------------
 
